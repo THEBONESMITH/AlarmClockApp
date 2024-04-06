@@ -15,6 +15,7 @@ struct ContentView: View {
     @State private var showPuzzle = false
     @State private var showMemoryGame = false
     @StateObject private var memoryGameViewModel = MemoryGameViewModel()
+    @StateObject private var viewModel = MemoryGameViewModel()
     
     var body: some View {
             VStack {
@@ -23,7 +24,7 @@ struct ContentView: View {
                 
                 // Present the MemoryGameView when the alarm goes off
                 if showMemoryGame {
-                    MemoryGameView(viewModel: memoryGameViewModel)
+                    MemoryGameView(viewModel: MemoryGameViewModel())
                 }
     
                 HStack {

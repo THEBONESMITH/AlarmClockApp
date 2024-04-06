@@ -8,22 +8,20 @@
 import Foundation
 import SwiftUI
 
-// MemoryGameViewModel should be defined as shown previously
-// Including generating the sequence of tiles, setting up their colors, and handling game logic
-
 struct MemoryGameView: View {
-    @ObservedObject var viewModel: MemoryGameViewModel // Now using ViewModel to manage game state
-    private let columns: [GridItem] = Array(repeating: .init(.fixed(60), spacing: 10), count: 5) // Define the layout for your grid
+    @ObservedObject var viewModel: MemoryGameViewModel // Ensure this matches your actual ViewModel name and it's initialized correctly
+    private let columns: [GridItem] = Array(repeating: .init(.fixed(60), spacing: 10), count: 5)
 
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 10) {
-                ForEach(viewModel.tiles) { tile in // Iterate over tiles from ViewModel
+                ForEach(viewModel.tiles.indices, id: \.self) { index in
+                    let tile = viewModel.tiles[index]
                     Rectangle()
-                        .fill(tile.isRevealed ? tile.color : Color.gray) // Use the color from the ViewModel
+                        .fill(tile.isRevealed ? viewModel.currentRoundColor : Color.gray) // Use correct property name here
                         .frame(width: 60, height: 60)
                         .onTapGesture {
-                            viewModel.tileTapped(tile) // Handle tap via ViewModel
+                            viewModel.tileTapped(index) // Assuming your ViewModel has this method
                         }
                 }
             }
@@ -31,7 +29,7 @@ struct MemoryGameView: View {
         }
         .background(Color.black.opacity(0.8))
         .onAppear {
-            viewModel.resetGame() // Setup or reset the game when the view appears
+            viewModel.setupGame() // Ensure this method exists and is correctly implemented in your ViewModel
         }
     }
 }
