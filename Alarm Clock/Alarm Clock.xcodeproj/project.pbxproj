@@ -15,6 +15,9 @@
 		E1047CC62BC0BEAE00D8488A /* Bell Fire Alarm.aif in Resources */ = {isa = PBXBuildFile; fileRef = E1047CC42BC0BEAE00D8488A /* Bell Fire Alarm.aif */; };
 		E1047CC72BC0BEAE00D8488A /* Alarm Wristwatch.aif in Resources */ = {isa = PBXBuildFile; fileRef = E1047CC52BC0BEAE00D8488A /* Alarm Wristwatch.aif */; };
 		E1047CCA2BC0E3B800D8488A /* PuzzleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1047CC92BC0E3B800D8488A /* PuzzleView.swift */; };
+		E1047CCC2BC0EF4B00D8488A /* MemoryTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1047CCB2BC0EF4B00D8488A /* MemoryTile.swift */; };
+		E1047CCE2BC0EF6600D8488A /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1047CCD2BC0EF6600D8488A /* TileView.swift */; };
+		E1047CD02BC0EFAB00D8488A /* MemoryGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1047CCF2BC0EFAB00D8488A /* MemoryGameView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +32,9 @@
 		E1047CC52BC0BEAE00D8488A /* Alarm Wristwatch.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Alarm Wristwatch.aif"; sourceTree = "<group>"; };
 		E1047CC82BC0C24500D8488A /* Alarm-Clock-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Alarm-Clock-Info.plist"; sourceTree = SOURCE_ROOT; };
 		E1047CC92BC0E3B800D8488A /* PuzzleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleView.swift; sourceTree = "<group>"; };
+		E1047CCB2BC0EF4B00D8488A /* MemoryTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryTile.swift; sourceTree = "<group>"; };
+		E1047CCD2BC0EF6600D8488A /* TileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
+		E1047CCF2BC0EFAB00D8488A /* MemoryGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGameView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +77,9 @@
 				E1047CC52BC0BEAE00D8488A /* Alarm Wristwatch.aif */,
 				E1047CC42BC0BEAE00D8488A /* Bell Fire Alarm.aif */,
 				E1047CC92BC0E3B800D8488A /* PuzzleView.swift */,
+				E1047CCB2BC0EF4B00D8488A /* MemoryTile.swift */,
+				E1047CCD2BC0EF6600D8488A /* TileView.swift */,
+				E1047CCF2BC0EFAB00D8488A /* MemoryGameView.swift */,
 			);
 			path = "Alarm Clock";
 			sourceTree = "<group>";
@@ -155,9 +164,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1047CCC2BC0EF4B00D8488A /* MemoryTile.swift in Sources */,
 				E1047CCA2BC0E3B800D8488A /* PuzzleView.swift in Sources */,
+				E1047CD02BC0EFAB00D8488A /* MemoryGameView.swift in Sources */,
 				E1047CB62BC0B6AE00D8488A /* ContentView.swift in Sources */,
 				E1047CB42BC0B6AE00D8488A /* Alarm_ClockApp.swift in Sources */,
+				E1047CCE2BC0EF6600D8488A /* TileView.swift in Sources */,
 				E1047CC32BC0B76500D8488A /* AlarmManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -13,12 +13,18 @@ struct ContentView: View {
     @State private var selectedMinute = Calendar.current.component(.minute, from: Date())
     @State private var isAlarmSet = false
     @State private var showPuzzle = false
+    @State private var showMemoryGame = false
     
     var body: some View {
             VStack {
                 Text(isAlarmSet ? "Alarm is set" : "Set Alarm")
                     .font(.largeTitle)
                 
+                // Present the MemoryGameView when the alarm goes off
+                if showMemoryGame {
+                    MemoryGameView()
+                }
+    
                 HStack {
                     Picker("Hour", selection: $selectedHour) {
                         ForEach(0..<24) { hour in
