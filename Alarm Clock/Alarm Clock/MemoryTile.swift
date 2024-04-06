@@ -6,11 +6,12 @@
 //
 
 import Foundation
+// MemoryTile.swift
+
 import SwiftUI
 
 struct MemoryTile: Identifiable {
-    let id: UUID
-    var isRevealed: Bool
-    var isCorrect: Bool
-    // Consider adding color here if tiles have individual colors
+    let id = UUID()
+    var isRevealed: Bool = false
+    var isCorrect: Bool = false
 }

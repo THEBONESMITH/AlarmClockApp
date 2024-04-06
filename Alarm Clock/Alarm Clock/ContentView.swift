@@ -25,6 +25,9 @@ struct ContentView: View {
                 // Present the MemoryGameView when the alarm goes off
                 if showMemoryGame {
                     MemoryGameView(viewModel: MemoryGameViewModel())
+                        .onAppear {
+                            // The viewModel is initialized here, ensuring setupGame() is called at the right moment
+                        }
                 }
     
                 HStack {

@@ -5,82 +5,73 @@
 //  Created by . . on 06/04/2024.
 //
 
-import Foundation
 import SwiftUI
 import Combine
 
 class MemoryGameViewModel: ObservableObject {
     @Published var tiles: [MemoryTile] = []
-    private var correctSequence: Set<Int> = []
-    private var revealTimer: AnyCancellable?
-    
-    // This property can be used by the view to apply the round's color.
     @Published var currentRoundColor: Color = .gray
+    private var correctTiles = Set<UUID>()
+    private var revealTimer: AnyCancellable?
 
     init() {
         setupGame()
     }
-
-    func setupGame() {
-        correctSequence = generateSequence(length: 7, numTiles: 25)
-        currentRoundColor = getRandomPastelColor() // Set the color for the new round
-        tiles = (0..<25).map { index in
-            MemoryTile(id: UUID(), isRevealed: false, isCorrect: correctSequence.contains(index))
-        }
-        // Reveal correct tiles initially and then hide them after a delay.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.revealCorrectTiles()
-        }
-    }
     
-    private func revealCorrectTiles() {
-        // Reveal correct tiles initially
-        tiles.indices.forEach { index in
+    func testRevealTiles() {
+        for index in tiles.indices {
             tiles[index].isRevealed = tiles[index].isCorrect
         }
+    }
 
-        // Flip them back over after a short delay
-        revealTimer = Just(())
+    func setupGame() {
+        // Decide how many tiles you want to be correct.
+        let numberOfCorrectTiles = 7
+        
+        // Generate a set of unique indices for the correct tiles.
+        var correctIndices: Set<Int> = []
+        while correctIndices.count < numberOfCorrectTiles {
+            correctIndices.insert(Int.random(in: 0..<25))
+        }
+        
+        // Map each index to a MemoryTile, marking it as correct if its index is in the correctIndices set.
+        tiles = (0..<25).map { index in MemoryTile(isCorrect: correctIndices.contains(index)) }
+        
+        // Initially reveal correct tiles.
+        revealCorrectTiles()
+    }
+
+    func revealCorrectTiles() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.tiles.indices.forEach { index in
+                if self.tiles[index].isCorrect {
+                    self.tiles[index].isRevealed = true
+                    self.correctTiles.insert(self.tiles[index].id)
+                }
+            }
+            self.hideTilesAfterDelay()
+        }
+    }
+
+    func hideTilesAfterDelay() {
+        revealTimer = Just(true)
             .delay(for: .seconds(3), scheduler: RunLoop.main)
-            .sink { [weak self] in
-                self?.hideTiles()
+            .sink { [weak self] _ in
+                self?.tiles.indices.forEach { index in
+                    self?.tiles[index].isRevealed = false
+                }
             }
     }
 
-    private func hideTiles() {
-        // Hide all tiles
-        tiles.indices.forEach { index in
-            tiles[index].isRevealed = false
+    func tileTapped(at index: Int) {
+        // You already have the index, so there's no need to find it again.
+        // Ensure the index is within bounds to avoid out-of-range errors.
+        guard tiles.indices.contains(index) else { return }
+
+        // Use the index directly to access the tile in the tiles array.
+        if correctTiles.contains(tiles[index].id) {
+            // You directly toggle the isRevealed state of the tile at the given index.
+            tiles[index].isRevealed = !tiles[index].isRevealed
         }
-        // Notify the view to update since we're changing the state directly
-        self.objectWillChange.send()
-    }
-    
-    func tileTapped(_ index: Int) {
-        // Process a tile tap, determining if it's a correct guess
-        withAnimation {
-            if tiles[index].isCorrect {
-                // Correct tiles reveal in the round's color
-                tiles[index].isRevealed = true
-            } else {
-                // Incorrect guess logic here
-                // Temporarily show incorrect guess, then flip back
-            }
-        }
-    }
-
-    private func generateSequence(length: Int, numTiles: Int) -> Set<Int> {
-        return Set((0..<numTiles).shuffled().prefix(length))
-    }
-
-    private func getRandomPastelColor() -> Color {
-        let r = Double.random(in: 150...255) / 255.0
-        let g = Double.random(in: 150...255) / 255.0
-        let b = Double.random(in: 150...255) / 255.0
-        return Color(red: r, green: g, blue: b)
-    }
-
-    func resetGame() {
-        setupGame() // Resetting the game will also re-initialize the tiles and color
     }
 }
