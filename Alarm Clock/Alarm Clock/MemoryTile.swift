@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 struct MemoryTile: Identifiable {
-    let id: UUID
+    let id: UUID = UUID() // Ensures each tile has a unique ID
     var isRevealed: Bool = false
-    var isMatched: Bool = false
-    var color: Color = .gray
+    var isCorrect: Bool = false // Tracks if this tile is part of the correct sequence
+    var color: Color = .gray // The color of the tile
 }

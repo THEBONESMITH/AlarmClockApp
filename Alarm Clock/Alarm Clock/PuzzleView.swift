@@ -33,7 +33,7 @@ struct PuzzleView: View {
             .padding(20)
             .background(Color.black.opacity(0.8))
         }
-        .frame(minWidth: 300, minHeight: 300) // Ensure the grid has a reasonable minimum size
+        .frame(minWidth: 500, minHeight: 500) // Ensure the grid has a reasonable minimum size
         .onAppear {
             setupGame()
         }
