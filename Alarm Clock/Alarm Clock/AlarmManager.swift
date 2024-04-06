@@ -19,6 +19,40 @@ class AlarmManager: ObservableObject {
         setupAudioPlayers()
     }
 
+    func setAlarm(hour: Int, minute: Int) {
+        let calendar = Calendar.current
+        let now = Date()
+        let currentHour = calendar.component(.hour, from: now)
+        let currentMinute = calendar.component(.minute, from: now)
+
+        if hour == currentHour && minute == currentMinute {
+            // If the times match, trigger the alarm immediately.
+            DispatchQueue.main.async {
+                // Assuming playSound() triggers the puzzle view or alarm sound.
+                self.playSound()
+            }
+        } else {
+            // Set the alarm for a future time.
+            var components = calendar.dateComponents([.year, .month, .day], from: now)
+            components.hour = hour
+            components.minute = minute
+            alarmTime = calendar.date(from: components)
+            
+            // Schedule a timer or background task to check the alarm time.
+            // Your existing scheduling logic here.
+        }
+    }
+
+    func checkAlarm() {
+        guard let alarmTime = alarmTime else { return }
+
+        let now = Date()
+        if Calendar.current.isDate(now, equalTo: alarmTime, toGranularity: .minute) {
+            // Alarm time reached, play sound
+            playSound()
+        }
+    }
+
     func setupAudioPlayers() {
         guard let wristwatchURL = Bundle.main.url(forResource: "Alarm Wristwatch", withExtension: "aif"),
               let bellURL = Bundle.main.url(forResource: "Bell Fire Alarm", withExtension: "aif") else {
@@ -38,14 +72,8 @@ class AlarmManager: ObservableObject {
     }
 
     func playSound() {
-        if isPlayingWristwatchAlarm {
-            wristwatchPlayer?.play()
-            Timer.scheduledTimer(withTimeInterval: 300, repeats: false) { _ in
-                self.switchToBellAlarm()
-            }
-        } else {
-            switchToWristwatchAlarm()
-        }
+        print("Playing wristwatch sound")
+        wristwatchPlayer?.play()
     }
 
     func switchToBellAlarm() {
@@ -70,5 +98,3 @@ class AlarmManager: ObservableObject {
         alarmTime = nil
     }
 }
-
-
