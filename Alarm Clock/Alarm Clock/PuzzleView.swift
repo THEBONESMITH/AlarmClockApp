@@ -5,36 +5,61 @@
 //  Created by . . on 06/04/2024.
 //
 
-import Foundation
 import SwiftUI
 
 struct PuzzleView: View {
     @Binding var isPresented: Bool
-    private let rows = Array(repeating: GridItem(.flexible(), spacing: 10), count: 5)
-    @State var tiles: [Tile] = (0..<25).map { Tile(id: $0) }
+    
+    private let gridLayout: [GridItem] = Array(repeating: .init(.flexible()), count: 5)
+    @State private var tiles: [Tile] = (0..<25).map { _ in Tile() }
+
+    // Define a minimum tile size to ensure that tiles have a visible size even if calculations fail
+    private let minTileSize: CGFloat = 50
 
     var body: some View {
-        VStack {
-            LazyVGrid(columns: rows, spacing: 10) {
+        ScrollView {
+            // Use Flexible frames with minimum size constraints
+            LazyVGrid(columns: gridLayout, spacing: 10) {
                 ForEach(tiles) { tile in
                     Rectangle()
-                        .foregroundColor(tile.isRevealed ? .blue : .gray)
-                        .aspectRatio(1, contentMode: .fit) // Enforce a 1:1 aspect ratio
+                        .foregroundColor(tile.isRevealed ? .green : .gray)
+                        .aspectRatio(1, contentMode: .fit) // This keeps the tiles square
+                        .border(Color.white, width: 1)
                         .onTapGesture {
-                            // Handle tile tap
+                            tileTapped(tile)
                         }
                 }
             }
-            .padding(10)
+            .padding(20)
             .background(Color.black.opacity(0.8))
         }
+        .frame(minWidth: 300, minHeight: 300) // Ensure the grid has a reasonable minimum size
         .onAppear {
-            // Prepare the puzzle game
+            setupGame()
         }
+    }
+    
+    private func tileTapped(_ tile: Tile) {
+            guard let index = tiles.firstIndex(where: { $0.id == tile.id }) else { return }
+            withAnimation {
+                tiles[index].isRevealed.toggle()
+            }
+        }
+    
+    private func setupGame() {
+        // Shuffle the tiles or perform other setup tasks here.
+        tiles.shuffle()
     }
 }
 
 struct Tile: Identifiable {
-    let id: Int
+    let id = UUID()
     var isRevealed: Bool = false
+}
+
+// Preview for the PuzzleView
+struct PuzzleView_Previews: PreviewProvider {
+    static var previews: some View {
+        PuzzleView(isPresented: .constant(true))
+    }
 }

@@ -36,16 +36,10 @@ struct MemoryGameView: View {
     }
     
     // A method within the view struct to handle tile taps
-        private func tileTapped(_ tile: MemoryTile) {
-            guard let index = tiles.firstIndex(where: { $0.id == tile.id }) else { return }
-            
-            // Perform actions when a tile is tapped
-            withAnimation {
-                tiles[index].isRevealed.toggle()
-            }
-            
-            // Add more game logic as needed
-        }
+    private func tileTapped(_ tile: MemoryTile) {
+        guard let index = tiles.firstIndex(where: { $0.id == tile.id }) else { return }
+        // Perform your logic for when a tile is tapped
+    }
 
     private func revealTile(_ tile: MemoryTile) {
         if let index = tiles.firstIndex(where: { $0.id == tile.id }) {
