@@ -26,50 +26,57 @@ struct ContentView: View {
     var body: some View {
         VStack {
             HStack {
-                Picker("Hour", selection: $selectedHour) {
-                    ForEach(0..<24) { hour in
-                        Text("\(hour)").tag(hour)
+                // Hour Stepper
+                Stepper(onIncrement: {
+                    selectedHour = (selectedHour + 1) % 24
+                }, onDecrement: {
+                    selectedHour = (selectedHour + 23) % 24
+                }) {
+                    // Making the Text view bigger, centered, and with a fixed width
+                    Text("\(selectedHour):")
+                        .font(.title) // Adjust the font size as needed
+                        .frame(width: 50, alignment: .center) // Adjust the fixed width as needed
+                }
+                .fixedSize()
+
+                // Minute Stepper
+                Stepper(value: $selectedMinute, in: 0...59) {
+                    // Making the Text view bigger, centered, and with a fixed width
+                    Text("\(selectedMinute)")
+                        .font(.title) // Adjust the font size as needed
+                        .frame(width: 50, alignment: .center) // Adjust the fixed width as needed
+                }
+                .fixedSize()
+                }
+                .padding()
+
+                // Your existing Button for setting/canceling the alarm
+                Button(action: {
+                    if isAlarmSet {
+                        alarmManager.cancelAlarm()
+                        isAlarmSet = false
+                    } else {
+                        alarmManager.setAlarm(hour: selectedHour, minute: selectedMinute)
+                        isAlarmSet = true
+                    }
+                }) {
+                    Text(isAlarmSet ? "Cancel Alarm" : "Set Alarm")
+                }
+                .buttonStyle(.borderedProminent)
+                .padding()
+
+                // Your existing Button for resetting to current time
+                Button("Reset to Current Time") {
+                    let now = Date()
+                    selectedHour = Calendar.current.component(.hour, from: now)
+                    selectedMinute = Calendar.current.component(.minute, from: now)
+                    if isAlarmSet {
+                        alarmManager.cancelAlarm()
+                        isAlarmSet = false
                     }
                 }
-                .pickerStyle(MenuPickerStyle())
-                .frame(width: 100) // Adjust the width as needed
-
-                Picker("Minute", selection: $selectedMinute) {
-                    ForEach(0..<60) { minute in
-                        Text("\(minute)").tag(minute)
-                    }
-                }
-                .pickerStyle(MenuPickerStyle())
-                .frame(width: 100) // Adjust the width as needed
-            }
-            .disabled(isAlarmSet) // Disable the pickers when the alarm is set
-
-            // Buttons for setting/canceling the alarm and resetting the time
-            Button(action: {
-                if isAlarmSet {
-                    alarmManager.cancelAlarm()
-                    isAlarmSet = false
-                } else {
-                    alarmManager.setAlarm(hour: selectedHour, minute: selectedMinute)
-                    isAlarmSet = true
-                }
-            }) {
-                Text(isAlarmSet ? "Cancel Alar      m" : "Set Alarm")
-            }
-            .buttonStyle(.borderedProminent)
-            .padding()
-
-            Button("Reset to Current Time") {
-                let now = Date()
-                selectedHour = Calendar.current.component(.hour, from: now)
-                selectedMinute = Calendar.current.component(.minute, from: now)
-                if isAlarmSet {
-                    alarmManager.cancelAlarm()
-                    isAlarmSet = false
-                }
-            }
-            .buttonStyle(.bordered)
-            .padding()
+                .buttonStyle(.bordered)
+                .padding()
         }
         // Listen for changes to shouldShowMemoryGame to show the MemoryGameView
         .sheet(isPresented: $alarmManager.shouldShowMemoryGame) {
