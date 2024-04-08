@@ -6,17 +6,17 @@
 //
 
 import SwiftUI
+import AppKit
 
 @main
 struct Alarm_ClockApp: App {
-    // Create an instance of AlarmManager
-    var alarmManager = AlarmManager()
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
-        WindowGroup {
-            // Only AlarmManager is passed to ContentView.
-            // MemoryGameViewModel should be initialized inside ContentView.
-            ContentView(alarmManager: alarmManager)
+        // Empty or minimal scene setup
+        // You can provide settings or handle non-window-related app functionality here
+        Settings {
+            Text("Settings Placeholder") // This is just a placeholder
         }
     }
 }
