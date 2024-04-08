@@ -19,6 +19,7 @@
 		E1047CCE2BC0EF6600D8488A /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1047CCD2BC0EF6600D8488A /* TileView.swift */; };
 		E1047CD02BC0EFAB00D8488A /* MemoryGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1047CCF2BC0EFAB00D8488A /* MemoryGameView.swift */; };
 		E1047CD22BC11CCF00D8488A /* MemoryGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1047CD12BC11CCF00D8488A /* MemoryGameViewModel.swift */; };
+		E1047CD42BC40C4400D8488A /* StartScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1047CD32BC40C4400D8488A /* StartScreenView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		E1047CCD2BC0EF6600D8488A /* TileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
 		E1047CCF2BC0EFAB00D8488A /* MemoryGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGameView.swift; sourceTree = "<group>"; };
 		E1047CD12BC11CCF00D8488A /* MemoryGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGameViewModel.swift; sourceTree = "<group>"; };
+		E1047CD32BC40C4400D8488A /* StartScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				E1047CCD2BC0EF6600D8488A /* TileView.swift */,
 				E1047CCF2BC0EFAB00D8488A /* MemoryGameView.swift */,
 				E1047CD12BC11CCF00D8488A /* MemoryGameViewModel.swift */,
+				E1047CD32BC40C4400D8488A /* StartScreenView.swift */,
 			);
 			path = "Alarm Clock";
 			sourceTree = "<group>";
@@ -170,6 +173,7 @@
 				E1047CCC2BC0EF4B00D8488A /* MemoryTile.swift in Sources */,
 				E1047CCA2BC0E3B800D8488A /* PuzzleView.swift in Sources */,
 				E1047CD02BC0EFAB00D8488A /* MemoryGameView.swift in Sources */,
+				E1047CD42BC40C4400D8488A /* StartScreenView.swift in Sources */,
 				E1047CD22BC11CCF00D8488A /* MemoryGameViewModel.swift in Sources */,
 				E1047CB62BC0B6AE00D8488A /* ContentView.swift in Sources */,
 				E1047CB42BC0B6AE00D8488A /* Alarm_ClockApp.swift in Sources */,

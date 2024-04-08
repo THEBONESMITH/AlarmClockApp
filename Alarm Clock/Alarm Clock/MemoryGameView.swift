@@ -9,23 +9,36 @@ import SwiftUI
 
 struct MemoryGameView: View {
     @ObservedObject var viewModel: MemoryGameViewModel
-
+    @State private var showStartScreen = true
+    
     private let columns: [GridItem] = Array(repeating: .init(.fixed(60), spacing: 10), count: 5)
 
     var body: some View {
-            VStack {
-                ScrollView {
-                    LazyVGrid(columns: columns, spacing: 10) {
-                        ForEach(viewModel.tiles, id: \.id) { tile in
-                            TileView(viewModel: viewModel, tileId: tile.id)
-                                .frame(width: 60, height: 60)
+            ZStack {
+                VStack {
+                    ScrollView {
+                        LazyVGrid(columns: columns, spacing: 10) {
+                            ForEach(viewModel.tiles, id: \.id) { tile in
+                                TileView(viewModel: viewModel, tileId: tile.id)
+                                    .frame(width: 60, height: 60)
+                            }
                         }
+                        .padding(10)
                     }
-                    .padding(10)
                 }
-            }
-            .onAppear {
-                viewModel.revealCorrectTilesTemporarily()
+                
+                if showStartScreen {
+                    StartScreenView(onStart: {
+                        withAnimation {
+                            showStartScreen = false
+                        }
+                        // This is the right place to call it, ensuring it's only done once the Start button is pressed.
+                        viewModel.revealCorrectTilesTemporarily()
+                    })
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color.black.opacity(0.5))
+                    .foregroundColor(.white)
+                }
             }
         }
     }
