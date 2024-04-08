@@ -35,12 +35,16 @@ class MemoryGameViewModel: ObservableObject {
             
             if !tiles[index].isCorrect {
                 isWaitingForReset = true
-                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
                     self?.resetGameForNewRound()
                 }
             } else {
-                checkForWin()
+                if checkForWin() {
+                    // Reduced delay here, for example, to 0.75 seconds
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) { [weak self] in
+                        self?.endGame()
+                    }
+                }
             }
         }
     }
@@ -61,12 +65,18 @@ class MemoryGameViewModel: ObservableObject {
         revealCorrectTilesTemporarily()
     }
 
-    private func checkForWin() {
+    private func checkForWin() -> Bool {
         let allCorrectTilesRevealed = tiles.filter { $0.isCorrect }.allSatisfy { $0.isRevealed }
         if allCorrectTilesRevealed {
             print("All correct tiles revealed. Player has won.")
-            alarmManager.turnOffAlarm()
+            return true
         }
+        return false
+    }
+    
+    func endGame() {
+        alarmManager.turnOffAlarm()
+        // Any additional logic needed to reset the game state or prepare for a new game can go here
     }
 
     func revealCorrectTilesTemporarilyWithAnimation() {
