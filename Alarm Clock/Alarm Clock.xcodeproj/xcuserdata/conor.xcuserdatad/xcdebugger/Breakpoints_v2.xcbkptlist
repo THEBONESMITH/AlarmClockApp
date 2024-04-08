@@ -14,9 +14,9 @@
             filePath = "Alarm Clock/MemoryGameViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "revealCorrectTilesTemporarily()"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "revealCorrectTilesTemporarilyWithAnimation()"
             landmarkType = "7">
             <Locations>
                <Location
@@ -62,9 +62,9 @@
             filePath = "Alarm Clock/MemoryGameViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
-            landmarkName = "setupGame()"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
+            landmarkName = "revealCorrectTilesTemporarily()"
             landmarkType = "7">
             <Locations>
                <Location

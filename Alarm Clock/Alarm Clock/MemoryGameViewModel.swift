@@ -11,6 +11,8 @@ import Combine
 class MemoryGameViewModel: ObservableObject {
     @Published var tiles: [MemoryTile] = []
     @Published var currentRoundColor: Color = .gray
+    @Published var isWaitingForReset: Bool = false
+    @Published var isRevealingTiles: Bool = false
     private var revealTimer: AnyCancellable?
     
     // Add a reference to AlarmManager
@@ -23,24 +25,28 @@ class MemoryGameViewModel: ObservableObject {
     }
     
     func toggleTile(_ id: UUID) {
+        // Check if the game is currently revealing tiles or waiting for reset
+        if isWaitingForReset || isRevealingTiles {
+            return
+        }
+
         if let index = tiles.firstIndex(where: { $0.id == id }) {
-            // Toggle the tile's visibility first, whether it's correct or not
             tiles[index].isRevealed = true
             
-            // Check if it's an incorrect tile
             if !tiles[index].isCorrect {
-                // Delayed game reset to allow the UI to update and show the wrong tile
+                isWaitingForReset = true
+                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
                     self?.resetGameForNewRound()
                 }
             } else {
-                // If the tile is correct, proceed to check for win condition
                 checkForWin()
             }
         }
     }
     
     func resetGameForNewRound() {
+        isWaitingForReset = false // Allow tile interactions again
         var correctIndices: Set<Int> = []
         while correctIndices.count < 7 {
             correctIndices.insert(Int.random(in: 0..<25))
@@ -82,26 +88,22 @@ class MemoryGameViewModel: ObservableObject {
     }
     
     func revealCorrectTilesTemporarily() {
-        // First, ensure all correct tiles are revealed.
+        isRevealingTiles = true  // Start revealing tiles
+        
         for index in tiles.indices where tiles[index].isCorrect {
             tiles[index].isRevealed = true
         }
+        self.tiles = self.tiles.map { $0 }  // Ensure UI updates
         
-        // Force SwiftUI to recognize the change by reassigning the tiles array.
-        self.tiles = self.tiles.map { $0 }
-        // No need for objectWillChange.send() since we're updating @Published property
-
-        // Schedule the reversal after a brief delay.
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
             guard let self = self else { return }
 
             for index in self.tiles.indices where self.tiles[index].isCorrect {
                 self.tiles[index].isRevealed = false
             }
+            self.tiles = self.tiles.map { $0 }  // Ensure UI updates again
             
-            // Again, force SwiftUI to recognize the change by reassigning the tiles array.
-            self.tiles = self.tiles.map { $0 }
-            // As before, no need for objectWillChange.send() here
+            self.isRevealingTiles = false  // Done revealing tiles
         }
     }
     
