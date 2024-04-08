@@ -14,7 +14,8 @@ struct Alarm_ClockApp: App {
 
     var body: some Scene {
         WindowGroup {
-            // Pass the instance to ContentView
+            // Only AlarmManager is passed to ContentView.
+            // MemoryGameViewModel should be initialized inside ContentView.
             ContentView(alarmManager: alarmManager)
         }
     }

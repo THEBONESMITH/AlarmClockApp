@@ -12,11 +12,33 @@ class MemoryGameViewModel: ObservableObject {
     @Published var tiles: [MemoryTile] = []
     @Published var currentRoundColor: Color = .gray
     private var revealTimer: AnyCancellable?
+    
+    // Add a reference to AlarmManager
+    var alarmManager: AlarmManager
 
-    init() {
+    // Update the initializer to accept an AlarmManager instance
+    init(alarmManager: AlarmManager) {
+        self.alarmManager = alarmManager
         setupGame()
     }
     
+    func toggleTile(_ id: UUID) {
+        if let index = tiles.firstIndex(where: { $0.id == id }) {
+            // Toggle the isRevealed state
+            tiles[index].isRevealed.toggle()
+        }
+        checkForWin()
+    }
+    
+    private func checkForWin() {
+        let allCorrectTilesRevealed = tiles.filter { $0.isCorrect }.allSatisfy { $0.isRevealed }
+        if allCorrectTilesRevealed {
+            print("All correct tiles revealed. Player has won.")
+            // Now, it can correctly call turnOffAlarm on alarmManager
+            alarmManager.turnOffAlarm()
+        }
+    }
+
     func revealCorrectTilesTemporarilyWithAnimation() {
         // Reveal correct tiles with an animation
         for index in tiles.indices where tiles[index].isCorrect {

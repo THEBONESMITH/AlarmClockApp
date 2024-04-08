@@ -20,6 +20,11 @@ class AlarmManager: ObservableObject {
         setupAudioPlayers()
     }
     
+    func turnOffAlarm() {
+            isAlarmActive = false
+            // Additional logic to actually stop the alarm sound if needed
+        }
+    
     func setAlarm(hour: Int, minute: Int) {
         let calendar = Calendar.current
         let now = Date()

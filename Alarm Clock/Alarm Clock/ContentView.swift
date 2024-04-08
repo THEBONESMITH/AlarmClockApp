@@ -9,9 +9,19 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var alarmManager: AlarmManager
+    // Since MemoryGameViewModel needs to be shared or interact with AlarmManager,
+    // it's better to initialize it outside and pass it to ContentView if needed.
+    @StateObject var memoryGameViewModel: MemoryGameViewModel
+
     @State private var selectedHour = Calendar.current.component(.hour, from: Date())
     @State private var selectedMinute = Calendar.current.component(.minute, from: Date())
     @State private var isAlarmSet = false
+    
+    init(alarmManager: AlarmManager) {
+            self.alarmManager = alarmManager
+            // Initialize MemoryGameViewModel with AlarmManager internally
+            _memoryGameViewModel = StateObject(wrappedValue: MemoryGameViewModel(alarmManager: alarmManager))
+        }
 
     var body: some View {
         VStack {
@@ -32,15 +42,13 @@ struct ContentView: View {
                 .pickerStyle(MenuPickerStyle())
             }
             .disabled(isAlarmSet) // Disable the pickers when the alarm is set
-            
+
             // Buttons for setting/canceling the alarm and resetting the time
             Button(action: {
                 if isAlarmSet {
-                    // Cancel the alarm
                     alarmManager.cancelAlarm()
                     isAlarmSet = false
                 } else {
-                    // Set the alarm
                     alarmManager.setAlarm(hour: selectedHour, minute: selectedMinute)
                     isAlarmSet = true
                 }
@@ -61,34 +69,19 @@ struct ContentView: View {
             }
             .buttonStyle(.bordered)
             .padding()
-
-            // "Toggle Grid" button to manually show/hide the memory game for testing
-            Button("Toggle Grid") {
-                print("Toggling Grid: \(alarmManager.shouldShowMemoryGame)")
-                alarmManager.shouldShowMemoryGame.toggle()
-            }
         }
-        .onChange(of: alarmManager.shouldShowMemoryGame, initial: alarmManager.shouldShowMemoryGame) { _, newShouldShow in
-                    if newShouldShow {
-                        // Actions to perform when shouldShowMemoryGame changes to true
-                        print("Memory game should show now.")
-                    } else {
-                        // Optionally, actions to perform when shouldShowMemoryGame changes to false
-                        print("Memory game should hide now.")
-                    }
-            // Optionally force a view update here if needed
-        }
-        // Depending on your app design, decide how you want to present the MemoryGameView
-        // For example, using a sheet, fullScreenCover (not available on macOS), or another custom view
-        // Ensure that such presentation logic is correctly integrated here
+        // Listen for changes to shouldShowMemoryGame to show the MemoryGameView
         .sheet(isPresented: $alarmManager.shouldShowMemoryGame) {
-            MemoryGameView(viewModel: MemoryGameViewModel())
+            // Inject the existing ViewModel to ensure it has access to the necessary context
+            MemoryGameView(viewModel: memoryGameViewModel)
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(alarmManager: AlarmManager())
+        // Just create and pass an instance of AlarmManager to ContentView
+        let previewAlarmManager = AlarmManager()
+        ContentView(alarmManager: previewAlarmManager)
     }
 }
