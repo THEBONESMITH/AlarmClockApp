@@ -107,24 +107,24 @@ class AlarmManager: ObservableObject {
         }
     
     func startWristwatchSound() {
-            wristwatchPlayer?.play()
-            
-            // Invalidate existing bell timer if any
+            // Ensure the bell sound is stopped before starting the wristwatch sound
+            bellPlayer?.stop()
             bellTimer?.invalidate()
+
+            wristwatchPlayer?.play()
             
             // Schedule wristwatch sound to play for 30 seconds
             wristwatchTimer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: false) { [weak self] _ in
                 self?.startBellSound()
             }
         }
-    
-    func startBellSound() {
-            // Stop the wristwatch sound and start the bell sound
+        
+        func startBellSound() {
+            // Ensure the wristwatch sound is stopped before starting the bell sound
             wristwatchPlayer?.stop()
-            bellPlayer?.play()
-            
-            // Invalidate existing wristwatch timer if any
             wristwatchTimer?.invalidate()
+
+            bellPlayer?.play()
             
             // Schedule bell sound to play for 10 seconds
             bellTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { [weak self] _ in
