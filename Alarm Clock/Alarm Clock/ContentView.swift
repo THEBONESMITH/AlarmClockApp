@@ -8,23 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var alarmManager = AlarmManager()
+    @ObservedObject var alarmManager: AlarmManager
     @State private var selectedHour = Calendar.current.component(.hour, from: Date())
     @State private var selectedMinute = Calendar.current.component(.minute, from: Date())
     @State private var isAlarmSet = false
-    @State private var showPuzzle = false
-    @StateObject private var memoryGameViewModel = MemoryGameViewModel()
-    
+
     var body: some View {
-            VStack {
-                Button("Toggle Grid") {
-                    alarmManager.shouldShowMemoryGame.toggle()
-                }
-                
-                if alarmManager.shouldShowMemoryGame {
-                    MemoryGameView(viewModel: memoryGameViewModel)
-            }
-    
+        VStack {
+            // Time setting UI
             HStack {
                 Picker("Hour", selection: $selectedHour) {
                     ForEach(0..<24) { hour in
@@ -32,7 +23,7 @@ struct ContentView: View {
                     }
                 }
                 .pickerStyle(MenuPickerStyle())
-                
+
                 Picker("Minute", selection: $selectedMinute) {
                     ForEach(0..<60) { minute in
                         Text("\(minute)").tag(minute)
@@ -42,53 +33,62 @@ struct ContentView: View {
             }
             .disabled(isAlarmSet) // Disable the pickers when the alarm is set
             
+            // Buttons for setting/canceling the alarm and resetting the time
             Button(action: {
-                if self.isAlarmSet {
-                    // Cancel the alarm if it is already set
-                    self.alarmManager.cancelAlarm()
-                    self.isAlarmSet = false
+                if isAlarmSet {
+                    // Cancel the alarm
+                    alarmManager.cancelAlarm()
+                    isAlarmSet = false
                 } else {
-                    // Set the alarm (which includes immediate triggering logic if the times match)
-                    self.alarmManager.setAlarm(hour: self.selectedHour, minute: self.selectedMinute)
-                    
-                    // Determine if the puzzle should be shown immediately (i.e., the times match)
-                    if self.selectedHour == Calendar.current.component(.hour, from: Date()) &&
-                       self.selectedMinute == Calendar.current.component(.minute, from: Date()) {
-                        self.showPuzzle = true
-                        // If needed, trigger sound or additional actions here for immediate alarms
-                    }
-                    
-                    self.isAlarmSet = true
+                    // Set the alarm
+                    alarmManager.setAlarm(hour: selectedHour, minute: selectedMinute)
+                    isAlarmSet = true
                 }
             }) {
                 Text(isAlarmSet ? "Cancel Alarm" : "Set Alarm")
             }
             .buttonStyle(.borderedProminent)
             .padding()
-            
-            // Reset button
+
             Button("Reset to Current Time") {
                 let now = Date()
-                self.selectedHour = Calendar.current.component(.hour, from: now)
-                self.selectedMinute = Calendar.current.component(.minute, from: now)
-                
-                if self.isAlarmSet {
-                    self.alarmManager.cancelAlarm()
-                    self.isAlarmSet = false
+                selectedHour = Calendar.current.component(.hour, from: now)
+                selectedMinute = Calendar.current.component(.minute, from: now)
+                if isAlarmSet {
+                    alarmManager.cancelAlarm()
+                    isAlarmSet = false
                 }
             }
             .buttonStyle(.bordered)
             .padding()
+
+            // "Toggle Grid" button to manually show/hide the memory game for testing
+            Button("Toggle Grid") {
+                print("Toggling Grid: \(alarmManager.shouldShowMemoryGame)")
+                alarmManager.shouldShowMemoryGame.toggle()
+            }
         }
-        .padding()
-        .sheet(isPresented: $showPuzzle) {
-            PuzzleView(isPresented: $showPuzzle)
+        .onChange(of: alarmManager.shouldShowMemoryGame, initial: alarmManager.shouldShowMemoryGame) { _, newShouldShow in
+                    if newShouldShow {
+                        // Actions to perform when shouldShowMemoryGame changes to true
+                        print("Memory game should show now.")
+                    } else {
+                        // Optionally, actions to perform when shouldShowMemoryGame changes to false
+                        print("Memory game should hide now.")
+                    }
+            // Optionally force a view update here if needed
+        }
+        // Depending on your app design, decide how you want to present the MemoryGameView
+        // For example, using a sheet, fullScreenCover (not available on macOS), or another custom view
+        // Ensure that such presentation logic is correctly integrated here
+        .sheet(isPresented: $alarmManager.shouldShowMemoryGame) {
+            MemoryGameView(viewModel: MemoryGameViewModel())
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(alarmManager: AlarmManager())
     }
 }

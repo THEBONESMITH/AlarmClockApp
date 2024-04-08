@@ -9,10 +9,13 @@ import SwiftUI
 
 @main
 struct Alarm_ClockApp: App {
+    // Create an instance of AlarmManager
+    var alarmManager = AlarmManager()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            // Pass the instance to ContentView
+            ContentView(alarmManager: alarmManager)
         }
     }
 }
-    
