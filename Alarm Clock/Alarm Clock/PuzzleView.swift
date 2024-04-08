@@ -18,7 +18,7 @@ struct PuzzleView: View {
             LazyVGrid(columns: gridLayout, spacing: 10) {
                 ForEach(tiles) { tile in
                     Rectangle()
-                        .foregroundColor(tile.isRevealed ? .green : .gray)
+                        .foregroundColor(tile.isRevealed ? .green : Color(red: 0.5, green: 0.5, blue: 0.5)) // Adjust the RGB values to make the grey darker
                         .aspectRatio(1, contentMode: .fit)
                         .border(Color.white, width: 1)
                         .onTapGesture {

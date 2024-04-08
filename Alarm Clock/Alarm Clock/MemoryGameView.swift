@@ -44,7 +44,7 @@ struct TileView: View {
                 ZStack {
                     // Decide the face of the tile based on its isRevealed state
                     Rectangle()
-                        .fill(tile.isRevealed ? (tile.isCorrect ? viewModel.currentRoundColor : Color.red) : Color.gray)
+                        .fill(tile.isRevealed ? (tile.isCorrect ? viewModel.currentRoundColor : Color.red) : Color(red: 0.4, green: 0.4, blue: 0.4)) // Darker grey
                         .frame(width: 60, height: 60)
                         .onTapGesture {
                             withAnimation(Animation.easeInOut(duration: 0.5)) {

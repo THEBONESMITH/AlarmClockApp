@@ -25,7 +25,6 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            // Time setting UI
             HStack {
                 Picker("Hour", selection: $selectedHour) {
                     ForEach(0..<24) { hour in
@@ -33,6 +32,7 @@ struct ContentView: View {
                     }
                 }
                 .pickerStyle(MenuPickerStyle())
+                .frame(width: 100) // Adjust the width as needed
 
                 Picker("Minute", selection: $selectedMinute) {
                     ForEach(0..<60) { minute in
@@ -40,6 +40,7 @@ struct ContentView: View {
                     }
                 }
                 .pickerStyle(MenuPickerStyle())
+                .frame(width: 100) // Adjust the width as needed
             }
             .disabled(isAlarmSet) // Disable the pickers when the alarm is set
 
