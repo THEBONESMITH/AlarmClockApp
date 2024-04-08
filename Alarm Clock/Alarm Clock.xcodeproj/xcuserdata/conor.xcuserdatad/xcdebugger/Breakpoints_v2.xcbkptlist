@@ -14,8 +14,8 @@
             filePath = "Alarm Clock/MemoryGameViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "MemoryGameViewModel"
             landmarkType = "3">
             <Locations>
@@ -62,8 +62,8 @@
             filePath = "Alarm Clock/MemoryGameViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
             landmarkName = "MemoryGameViewModel"
             landmarkType = "3">
             <Locations>

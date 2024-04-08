@@ -24,12 +24,37 @@ class MemoryGameViewModel: ObservableObject {
     
     func toggleTile(_ id: UUID) {
         if let index = tiles.firstIndex(where: { $0.id == id }) {
-            // Toggle the isRevealed state
-            tiles[index].isRevealed.toggle()
+            // Toggle the tile's visibility first, whether it's correct or not
+            tiles[index].isRevealed = true
+            
+            // Check if it's an incorrect tile
+            if !tiles[index].isCorrect {
+                // Delayed game reset to allow the UI to update and show the wrong tile
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+                    self?.resetGameForNewRound()
+                }
+            } else {
+                // If the tile is correct, proceed to check for win condition
+                checkForWin()
+            }
         }
-        checkForWin()
     }
     
+    func resetGameForNewRound() {
+        var correctIndices: Set<Int> = []
+        while correctIndices.count < 7 {
+            correctIndices.insert(Int.random(in: 0..<25))
+        }
+        
+        self.tiles = (0..<25).map { index in
+            MemoryTile(isRevealed: false, isCorrect: correctIndices.contains(index))
+        }
+        currentRoundColor = getRandomPastelColor()
+        
+        // Optionally, you might want to reveal the correct tiles temporarily here as well
+        revealCorrectTilesTemporarily()
+    }
+
     private func checkForWin() {
         let allCorrectTilesRevealed = tiles.filter { $0.isCorrect }.allSatisfy { $0.isRevealed }
         if allCorrectTilesRevealed {
@@ -81,23 +106,20 @@ class MemoryGameViewModel: ObservableObject {
     }
     
     func setupGame() {
-            // Initialize a set to keep track of which tiles are correct.
-            var correctIndices: Set<Int> = []
-            while correctIndices.count < 7 {
-                correctIndices.insert(Int.random(in: 0..<25))
-            }
-            
-            self.tiles = (0..<25).map { index in
-                // Assuming MemoryTile takes only a 'isCorrect' parameter for simplicity.
-                MemoryTile(isRevealed: false, isCorrect: correctIndices.contains(index))
-            }
-            currentRoundColor = getRandomPastelColor()
-            
-            // Schedule the reveal of correct tiles after a brief delay to ensure UI is ready.
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.revealCorrectTilesTemporarily()
-            }
+        var correctIndices: Set<Int> = []
+        while correctIndices.count < 7 {
+            correctIndices.insert(Int.random(in: 0..<25))
         }
+
+        self.tiles = (0..<25).map { index in
+            MemoryTile(isRevealed: false, isCorrect: correctIndices.contains(index))
+        }
+        currentRoundColor = getRandomPastelColor()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.revealCorrectTilesTemporarily()
+        }
+    }
 
         private func hideTiles() {
             for index in tiles.indices {
