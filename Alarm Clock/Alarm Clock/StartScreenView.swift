@@ -9,19 +9,15 @@ import Foundation
 import SwiftUI
 
 struct StartScreenView: View {
-    // This closure will be called when the user taps the "Start" button
     var onStart: () -> Void
     
     var body: some View {
         VStack {
-            Text("Ready to play?")
+            Text("Ready to Play?")
                 .font(.largeTitle)
+            Button("Start", action: onStart)
+                .buttonStyle(.borderedProminent)
                 .padding()
-            Button("Start") {
-                onStart()
-            }
-            .buttonStyle(.borderedProminent)
-            .padding()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.gray.opacity(0.8))

@@ -28,12 +28,15 @@ struct MemoryGameView: View {
                 }
                 
                 if showStartScreen {
+                    // Start screen that covers the grid until the game starts
                     StartScreenView(onStart: {
                         withAnimation {
                             showStartScreen = false
                         }
-                        // This is the right place to call it, ensuring it's only done once the Start button is pressed.
-                        viewModel.revealCorrectTilesTemporarily()
+                        viewModel.setupGame() // Setup or reset the game state
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            viewModel.revealCorrectTilesTemporarily()
+                        }
                     })
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.black.opacity(0.5))

@@ -54,7 +54,7 @@ struct ContentView: View {
                     isAlarmSet = true
                 }
             }) {
-                Text(isAlarmSet ? "Cancel Alarm" : "Set Alarm")
+                Text(isAlarmSet ? "Cancel Alar      m" : "Set Alarm")
             }
             .buttonStyle(.borderedProminent)
             .padding()

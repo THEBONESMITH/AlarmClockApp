@@ -16,8 +16,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "100"
             endingLineNumber = "100"
-            landmarkName = "MemoryGameViewModel"
-            landmarkType = "3">
+            landmarkName = "revealCorrectTilesTemporarily()"
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "89DB2F00-6C3F-43EC-8112-F791851F25DF - d34c6d3339d312b2"
@@ -64,8 +64,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "120"
             endingLineNumber = "120"
-            landmarkName = "MemoryGameViewModel"
-            landmarkType = "3">
+            landmarkName = "setupGame()"
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "05158D05-1E86-4F84-B07E-6F20AA665B46 - 863089ef213e9555"
