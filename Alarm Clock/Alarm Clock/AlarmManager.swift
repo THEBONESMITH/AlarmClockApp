@@ -21,9 +21,14 @@ class AlarmManager: ObservableObject {
     }
     
     func turnOffAlarm() {
-            isAlarmActive = false
-            // Additional logic to actually stop the alarm sound if needed
-        }
+        print("Turning off alarm...")
+        wristwatchPlayer?.stop()
+        bellPlayer?.stop()
+        isAlarmActive = false
+        shouldShowMemoryGame = false
+        alarmTime = nil
+        print("Alarm turned off")
+    }
     
     func setAlarm(hour: Int, minute: Int) {
         let calendar = Calendar.current

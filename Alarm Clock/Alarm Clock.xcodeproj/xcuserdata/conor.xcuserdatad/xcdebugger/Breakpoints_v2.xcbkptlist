@@ -14,10 +14,10 @@
             filePath = "Alarm Clock/MemoryGameViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "revealCorrectTilesTemporarily()"
-            landmarkType = "7">
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "MemoryGameViewModel"
+            landmarkType = "3">
             <Locations>
                <Location
                   uuid = "89DB2F00-6C3F-43EC-8112-F791851F25DF - d34c6d3339d312b2"
@@ -62,10 +62,10 @@
             filePath = "Alarm Clock/MemoryGameViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "setupGame()"
-            landmarkType = "7">
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "MemoryGameViewModel"
+            landmarkType = "3">
             <Locations>
                <Location
                   uuid = "05158D05-1E86-4F84-B07E-6F20AA665B46 - 863089ef213e9555"

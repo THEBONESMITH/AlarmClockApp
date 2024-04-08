@@ -34,7 +34,6 @@ class MemoryGameViewModel: ObservableObject {
         let allCorrectTilesRevealed = tiles.filter { $0.isCorrect }.allSatisfy { $0.isRevealed }
         if allCorrectTilesRevealed {
             print("All correct tiles revealed. Player has won.")
-            // Now, it can correctly call turnOffAlarm on alarmManager
             alarmManager.turnOffAlarm()
         }
     }
