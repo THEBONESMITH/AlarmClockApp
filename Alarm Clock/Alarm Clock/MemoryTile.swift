@@ -11,7 +11,16 @@ import Foundation
 import SwiftUI
 
 struct MemoryTile: Identifiable {
-    let id = UUID()
-    var isRevealed: Bool = false
-    var isCorrect: Bool = false
+    var id = UUID()
+    var isRevealed: Bool
+    var isCorrect: Bool
+
+    // Other properties...
+}
+
+// Manual Equatable conformance
+extension MemoryTile: Equatable {
+    static func ==(lhs: MemoryTile, rhs: MemoryTile) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
