@@ -44,13 +44,16 @@ class AlarmManager: ObservableObject {
         volumeCheckTimer?.invalidate()
     }
     
-    func ensureMaximumVolume() {
-        volumeCheckTimer?.invalidate() // Invalidate any existing timer
+    func ensureMaximumVolume(withInitialDelay delay: TimeInterval = 5.0) { // Default delay of 5 seconds
+        // Cancel any existing timer to avoid overlapping timers
+        volumeCheckTimer?.invalidate()
         
-        volumeCheckTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self] _ in
-            guard let self = self else { return }
-            let script = "osascript -e \"set volume output volume 100\""
-            self.executeCommand(script)
+        // Start the timer after a delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+            self?.volumeCheckTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
+                let script = "osascript -e \"set volume output volume 100\""
+                self?.executeCommand(script)
+            }
         }
     }
     

@@ -28,7 +28,7 @@ class MemoryGameViewModel: ObservableObject {
     
     @objc func startGame() {
         // Ensure the game volume is set appropriately.
-        alarmManager.ensureMaximumVolume()
+        alarmManager.ensureMaximumVolume(withInitialDelay: 5)
         
         // Other game-start specific activities can be placed here.
         // For example, if there's a countdown or initial animation, trigger it here.
