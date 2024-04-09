@@ -35,6 +35,54 @@ class AlarmManager: ObservableObject {
         bellTimer?.invalidate()
     }
     
+    func stopEnsuringVolume() {
+        // Invalidate the timer when the alarm is turned off or game ends
+        volumeCheckTimer?.invalidate()
+    }
+    
+    func ensureMaximumVolume() {
+        // Interval for how often to enforce maximum volume
+        let enforcementInterval: TimeInterval = 2 // seconds
+
+        // Cancel any existing timer to avoid multiple timers running simultaneously
+        volumeCheckTimer?.invalidate()
+
+        // Start a new timer to continuously enforce maximum volume
+        volumeCheckTimer = Timer.scheduledTimer(withTimeInterval: enforcementInterval, repeats: true) { _ in
+            // Command to set volume to its maximum
+            let script = "osascript -e \"set volume output volume 100\""
+            self.executeCommand(script)
+        }
+    }
+    
+    func continuouslyIncreaseVolume() {
+        let targetVolume: Int = 100 // Maximum system volume level
+        let initialStepVolume: Int = 30 // Starting increase from this volume if lower
+        let increments = 7 // Divide the path to 100% into steps for smoother transition
+        let timePerStep: TimeInterval = 2 // Time interval in seconds for each volume step increase
+
+        // Initially ensure volume is at least at the starting point
+        executeCommand("osascript -e \"set volume output volume \(initialStepVolume)\"")
+        
+        // Continuously attempt to increase volume in steps until 100% is reached
+        for step in 1...increments {
+            DispatchQueue.main.asyncAfter(deadline: .now() + timePerStep * Double(step)) {
+                // Calculate new volume target for this step, not exceeding 100%
+                let volumeStep = min(initialStepVolume + ((targetVolume - initialStepVolume) * step / increments), targetVolume)
+                let script = "osascript -e \"set volume output volume \(volumeStep)\""
+                self.executeCommand(script)
+            }
+        }
+        
+        // Schedule a repeating task to keep setting volume to 100%, ensuring it stays maxed out
+        DispatchQueue.main.asyncAfter(deadline: .now() + timePerStep * Double(increments + 1)) {
+            self.volumeCheckTimer = Timer.scheduledTimer(withTimeInterval: timePerStep, repeats: true) { _ in
+                let script = "osascript -e \"set volume output volume \(targetVolume)\""
+                self.executeCommand(script)
+            }
+        }
+    }
+    
     func graduallyIncreaseVolumeIfNeeded() {
         let initialVolume: Int = 30 // Minimal audible level
         let targetVolume: Int = 100 // Maximum volume level
@@ -209,7 +257,7 @@ class AlarmManager: ObservableObject {
     func executeCommand(_ command: String) {
         let process = Process()
         let pipe = Pipe()
-        
+
         process.standardOutput = pipe
         process.standardError = pipe
         process.arguments = ["-c", command]

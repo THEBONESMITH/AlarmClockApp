@@ -63,7 +63,8 @@ class MemoryGameViewModel: ObservableObject {
         
         // Optionally, you might want to reveal the correct tiles temporarily here as well
         revealCorrectTilesTemporarily()
-        alarmManager.graduallyIncreaseVolumeIfNeeded()
+        // alarmManager.graduallyIncreaseVolumeIfNeeded()
+        alarmManager.ensureMaximumVolume()
     }
 
     private func checkForWin() -> Bool {
@@ -78,6 +79,7 @@ class MemoryGameViewModel: ObservableObject {
     func endGame() {
         alarmManager.turnOffAlarm()
         // Any additional logic needed to reset the game state or prepare for a new game can go here
+        alarmManager.stopEnsuringVolume()
     }
 
     func revealCorrectTilesTemporarilyWithAnimation() {
@@ -132,6 +134,7 @@ class MemoryGameViewModel: ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.revealCorrectTilesTemporarily()
         }
+        alarmManager.ensureMaximumVolume()
     }
 
         private func hideTiles() {
