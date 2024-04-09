@@ -35,26 +35,46 @@ class AlarmManager: ObservableObject {
         bellTimer?.invalidate()
     }
     
+    func alarmDidGoOff() {
+        NotificationCenter.default.post(name: NSNotification.Name("AlarmDidGoOff"), object: nil)
+    }
+    
     func stopEnsuringVolume() {
         // Invalidate the timer when the alarm is turned off or game ends
         volumeCheckTimer?.invalidate()
     }
     
     func ensureMaximumVolume() {
-        // Interval for how often to enforce maximum volume
-        let enforcementInterval: TimeInterval = 2 // seconds
-
-        // Cancel any existing timer to avoid multiple timers running simultaneously
-        volumeCheckTimer?.invalidate()
-
-        // Start a new timer to continuously enforce maximum volume
-        volumeCheckTimer = Timer.scheduledTimer(withTimeInterval: enforcementInterval, repeats: true) { _ in
-            // Command to set volume to its maximum
+        volumeCheckTimer?.invalidate() // Invalidate any existing timer
+        
+        volumeCheckTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
             let script = "osascript -e \"set volume output volume 100\""
             self.executeCommand(script)
         }
     }
     
+    func graduallyIncreaseVolumeIfNeeded() {
+        let initialVolume: Int = 30 // Minimal audible level
+        let targetVolume: Int = 100 // Maximum volume level
+        let increments = 14 // Number of steps to reach the target volume
+        let totalDuration: TimeInterval = 10.0 // Duration over which to increase volume
+        let timePerStep = totalDuration / Double(increments)
+
+        // Set initial volume to ensure it's audible
+        executeCommand("osascript -e \"set volume output volume \(initialVolume)\"")
+        
+        // Gradually increase to target volume
+        for step in 1...increments {
+            DispatchQueue.main.asyncAfter(deadline: .now() + timePerStep * Double(step)) {
+                let volumeStep = initialVolume + ((targetVolume - initialVolume) * step / increments)
+                let script = "osascript -e \"set volume output volume \(volumeStep)\""
+                self.executeCommand(script)
+            }
+        }
+    }
+
+    /*
     func continuouslyIncreaseVolume() {
         let targetVolume: Int = 100 // Maximum system volume level
         let initialStepVolume: Int = 30 // Starting increase from this volume if lower
@@ -82,27 +102,7 @@ class AlarmManager: ObservableObject {
             }
         }
     }
-    
-    func graduallyIncreaseVolumeIfNeeded() {
-        let initialVolume: Int = 30 // Minimal audible level
-        let targetVolume: Int = 100 // Maximum volume level
-        let increments = 14 // Number of steps to reach the target volume
-        let totalDuration: TimeInterval = 10.0 // Duration over which to increase volume
-        let timePerStep = totalDuration / Double(increments)
-
-        // Set initial volume to ensure it's audible
-        executeCommand("osascript -e \"set volume output volume \(initialVolume)\"")
-        
-        // Gradually increase to target volume
-        for step in 1...increments {
-            DispatchQueue.main.asyncAfter(deadline: .now() + timePerStep * Double(step)) {
-                let volumeStep = initialVolume + ((targetVolume - initialVolume) * step / increments)
-                let script = "osascript -e \"set volume output volume \(volumeStep)\""
-                self.executeCommand(script)
-            }
-        }
-    }
-    
+     
     func adjustVolumeGradually() {
         let initialVolume: Int = 30 // Start volume
         let targetVolume: Int = 100 // End volume
@@ -122,7 +122,7 @@ class AlarmManager: ObservableObject {
             }
         }
     }
-    
+     
     func setInitialVolume() {
         let targetVolume: Int = 75 // Example target volume
         let script = "osascript -e \"set volume output volume \(targetVolume)\""
@@ -253,8 +253,10 @@ class AlarmManager: ObservableObject {
         """
         self.executeCommand(script)
     }
+     */
 
     func executeCommand(_ command: String) {
+        print("Executing command: \(command)") // Debugging line
         let process = Process()
         let pipe = Pipe()
 
@@ -319,7 +321,7 @@ class AlarmManager: ObservableObject {
 
     func triggerAlarm() {
         DispatchQueue.main.async {
-            self.adjustVolumeGradually()
+            // self.adjustVolumeGradually()
             self.graduallyIncreaseVolumeIfNeeded()
             
             // Other alarm activation logic here, such as starting sound playback

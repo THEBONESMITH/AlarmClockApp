@@ -13,6 +13,7 @@ class MemoryGameViewModel: ObservableObject {
     @Published var currentRoundColor: Color = .gray
     @Published var isWaitingForReset: Bool = false
     @Published var isRevealingTiles: Bool = false
+    @Published var isGameActive: Bool = false
     private var revealTimer: AnyCancellable?
     
     // Add a reference to AlarmManager
@@ -22,6 +23,29 @@ class MemoryGameViewModel: ObservableObject {
     init(alarmManager: AlarmManager) {
         self.alarmManager = alarmManager
         setupGame()
+        NotificationCenter.default.addObserver(self, selector: #selector(startGame), name: NSNotification.Name("AlarmDidGoOff"), object: nil)
+    }
+    
+    @objc func startGame() {
+        // Ensure the game volume is set appropriately.
+        alarmManager.ensureMaximumVolume()
+        
+        // Other game-start specific activities can be placed here.
+        // For example, if there's a countdown or initial animation, trigger it here.
+        
+        // Update game state to reflect that the game is now actively running.
+        DispatchQueue.main.async {
+            // Assuming `isGameActive` is a published property you might use
+            // to control game state in your UI.
+            self.isGameActive = true
+            
+            // If there's any UI element or message indicating the game is starting,
+            // manage that here as well.
+        }
+        
+        // Optionally, if you have any logic that needs to run right before
+        // the game view shows (like a last-second shuffle or a countdown),
+        // that would also be triggered here.
     }
     
     func toggleTile(_ id: UUID) {
@@ -134,7 +158,7 @@ class MemoryGameViewModel: ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.revealCorrectTilesTemporarily()
         }
-        alarmManager.ensureMaximumVolume()
+        // alarmManager.ensureMaximumVolume()
     }
 
         private func hideTiles() {
