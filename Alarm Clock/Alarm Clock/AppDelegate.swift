@@ -11,22 +11,20 @@ import SwiftUI
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     var window: NSWindow!
-    let alarmManager = AlarmManager() // Create an instance of AlarmManager
+    let alarmManager = AlarmManager()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        // Remove the .resizable flag from the window style
         window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 800, height: 600),
-            styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
+            styleMask: [.titled, .closable, .miniaturizable, .fullSizeContentView],
             backing: .buffered, defer: false)
-        window.minSize = NSSize(width: 600, height: 400)
         window.center()
         window.setFrameAutosaveName("Main Window")
         window.makeKeyAndOrderFront(nil)
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            let contentView = ContentView(alarmManager: self.alarmManager)
-            self.window.contentView = NSHostingView(rootView: contentView)
-        }
+        let contentView = ContentView(alarmManager: self.alarmManager)
+        window.contentView = NSHostingView(rootView: contentView)
     }
     
     @objc func windowDidResize(_ notification: Notification) {

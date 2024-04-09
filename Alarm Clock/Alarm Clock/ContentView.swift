@@ -28,14 +28,14 @@ struct ContentView: View {
                 }, onDecrement: {
                     selectedHour = (selectedHour + 23) % 24
                 }) {
-                    Text("\(selectedHour) :")
+                    Text(String(format: "%02d :", selectedHour)) // Format for two digits
                         .font(.title)
                         .frame(width: 50, alignment: .center)
                 }
                 .fixedSize()
 
                 Stepper(value: $selectedMinute, in: 0...59) {
-                    Text("\(selectedMinute)")
+                    Text(String(format: "%02d", selectedMinute)) // Format for two digits
                         .font(.title)
                         .frame(width: 50, alignment: .center)
                 }

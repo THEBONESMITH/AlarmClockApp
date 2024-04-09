@@ -12,8 +12,6 @@
 		E1047CB82BC0B6B000D8488A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1047CB72BC0B6B000D8488A /* Assets.xcassets */; };
 		E1047CBB2BC0B6B000D8488A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1047CBA2BC0B6B000D8488A /* Preview Assets.xcassets */; };
 		E1047CC32BC0B76500D8488A /* AlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1047CC22BC0B76500D8488A /* AlarmManager.swift */; };
-		E1047CC62BC0BEAE00D8488A /* Bell Fire Alarm.aif in Resources */ = {isa = PBXBuildFile; fileRef = E1047CC42BC0BEAE00D8488A /* Bell Fire Alarm.aif */; };
-		E1047CC72BC0BEAE00D8488A /* Alarm Wristwatch.aif in Resources */ = {isa = PBXBuildFile; fileRef = E1047CC52BC0BEAE00D8488A /* Alarm Wristwatch.aif */; };
 		E1047CCA2BC0E3B800D8488A /* PuzzleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1047CC92BC0E3B800D8488A /* PuzzleView.swift */; };
 		E1047CCC2BC0EF4B00D8488A /* MemoryTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1047CCB2BC0EF4B00D8488A /* MemoryTile.swift */; };
 		E1047CCE2BC0EF6600D8488A /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1047CCD2BC0EF6600D8488A /* TileView.swift */; };
@@ -21,6 +19,8 @@
 		E1047CD22BC11CCF00D8488A /* MemoryGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1047CD12BC11CCF00D8488A /* MemoryGameViewModel.swift */; };
 		E1047CD42BC40C4400D8488A /* StartScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1047CD32BC40C4400D8488A /* StartScreenView.swift */; };
 		E1047CD62BC4AF5E00D8488A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1047CD52BC4AF5E00D8488A /* AppDelegate.swift */; };
+		E1047CD92BC4C32900D8488A /* Alarm Wristwatch.aif in Resources */ = {isa = PBXBuildFile; fileRef = E1047CD82BC4C32900D8488A /* Alarm Wristwatch.aif */; };
+		E1047CDB2BC4C45C00D8488A /* Bell Fire Alarm.aif in Resources */ = {isa = PBXBuildFile; fileRef = E1047CDA2BC4C45C00D8488A /* Bell Fire Alarm.aif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,8 +31,6 @@
 		E1047CBA2BC0B6B000D8488A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E1047CBC2BC0B6B000D8488A /* Alarm_Clock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Alarm_Clock.entitlements; sourceTree = "<group>"; };
 		E1047CC22BC0B76500D8488A /* AlarmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmManager.swift; sourceTree = "<group>"; };
-		E1047CC42BC0BEAE00D8488A /* Bell Fire Alarm.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bell Fire Alarm.aif"; sourceTree = "<group>"; };
-		E1047CC52BC0BEAE00D8488A /* Alarm Wristwatch.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Alarm Wristwatch.aif"; sourceTree = "<group>"; };
 		E1047CC82BC0C24500D8488A /* Alarm-Clock-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Alarm-Clock-Info.plist"; sourceTree = SOURCE_ROOT; };
 		E1047CC92BC0E3B800D8488A /* PuzzleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleView.swift; sourceTree = "<group>"; };
 		E1047CCB2BC0EF4B00D8488A /* MemoryTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryTile.swift; sourceTree = "<group>"; };
@@ -41,6 +39,8 @@
 		E1047CD12BC11CCF00D8488A /* MemoryGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGameViewModel.swift; sourceTree = "<group>"; };
 		E1047CD32BC40C4400D8488A /* StartScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenView.swift; sourceTree = "<group>"; };
 		E1047CD52BC4AF5E00D8488A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E1047CD82BC4C32900D8488A /* Alarm Wristwatch.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Alarm Wristwatch.aif"; sourceTree = "<group>"; };
+		E1047CDA2BC4C45C00D8488A /* Bell Fire Alarm.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bell Fire Alarm.aif"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,8 +80,6 @@
 				E1047CBC2BC0B6B000D8488A /* Alarm_Clock.entitlements */,
 				E1047CB92BC0B6B000D8488A /* Preview Content */,
 				E1047CC22BC0B76500D8488A /* AlarmManager.swift */,
-				E1047CC52BC0BEAE00D8488A /* Alarm Wristwatch.aif */,
-				E1047CC42BC0BEAE00D8488A /* Bell Fire Alarm.aif */,
 				E1047CC92BC0E3B800D8488A /* PuzzleView.swift */,
 				E1047CCB2BC0EF4B00D8488A /* MemoryTile.swift */,
 				E1047CCD2BC0EF6600D8488A /* TileView.swift */,
@@ -89,6 +87,8 @@
 				E1047CD12BC11CCF00D8488A /* MemoryGameViewModel.swift */,
 				E1047CD32BC40C4400D8488A /* StartScreenView.swift */,
 				E1047CD52BC4AF5E00D8488A /* AppDelegate.swift */,
+				E1047CD82BC4C32900D8488A /* Alarm Wristwatch.aif */,
+				E1047CDA2BC4C45C00D8488A /* Bell Fire Alarm.aif */,
 			);
 			path = "Alarm Clock";
 			sourceTree = "<group>";
@@ -161,8 +161,8 @@
 			files = (
 				E1047CBB2BC0B6B000D8488A /* Preview Assets.xcassets in Resources */,
 				E1047CB82BC0B6B000D8488A /* Assets.xcassets in Resources */,
-				E1047CC62BC0BEAE00D8488A /* Bell Fire Alarm.aif in Resources */,
-				E1047CC72BC0BEAE00D8488A /* Alarm Wristwatch.aif in Resources */,
+				E1047CD92BC4C32900D8488A /* Alarm Wristwatch.aif in Resources */,
+				E1047CDB2BC4C45C00D8488A /* Bell Fire Alarm.aif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

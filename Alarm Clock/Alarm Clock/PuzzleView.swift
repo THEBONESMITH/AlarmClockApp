@@ -13,12 +13,11 @@ struct PuzzleView: View {
     @State private var tiles: [Tile] = (0..<25).map { _ in Tile() }
 
     var body: some View {
-        // Directly set the ScrollView to occupy a minimum size
         ScrollView(.vertical, showsIndicators: false) {
             LazyVGrid(columns: gridLayout, spacing: 10) {
                 ForEach(tiles) { tile in
                     Rectangle()
-                        .foregroundColor(tile.isRevealed ? .green : Color(red: 0.5, green: 0.5, blue: 0.5)) // Adjust the RGB values to make the grey darker
+                        .foregroundColor(tile.isRevealed ? .green : Color(red: 0.5, green: 0.5, blue: 0.5))
                         .aspectRatio(1, contentMode: .fit)
                         .border(Color.white, width: 1)
                         .onTapGesture {
@@ -29,7 +28,9 @@ struct PuzzleView: View {
             .padding(20)
             .background(Color.black.opacity(0.8))
         }
-        .frame(minWidth: 500, minHeight: 500) // Directly enforce a minimum size for the grid container
+        // Set both minWidth and maxWidth to the same value to prevent resizing
+        // Same for minHeight and maxHeight
+        .frame(minWidth: 500, maxWidth: 500, minHeight: 500, maxHeight: 500)
         .onAppear {
             setupGame()
         }
