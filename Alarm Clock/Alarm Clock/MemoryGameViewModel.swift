@@ -63,6 +63,7 @@ class MemoryGameViewModel: ObservableObject {
         
         // Optionally, you might want to reveal the correct tiles temporarily here as well
         revealCorrectTilesTemporarily()
+        alarmManager.graduallyIncreaseVolumeIfNeeded()
     }
 
     private func checkForWin() -> Bool {
