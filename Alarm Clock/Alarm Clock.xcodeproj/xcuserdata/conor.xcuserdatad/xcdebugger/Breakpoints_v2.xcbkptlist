@@ -7,54 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "89DB2F00-6C3F-43EC-8112-F791851F25DF"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Alarm Clock/MemoryGameViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
-            landmarkName = "revealCorrectTilesTemporarily()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "89DB2F00-6C3F-43EC-8112-F791851F25DF - d34c6d3339d312b2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Alarm_Clock.MemoryGameViewModel.revealCorrectTilesTemporarily() -&gt; ()"
-                  moduleName = "Alarm Clock"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/conor/Documents/Alarm%20Clock/Alarm%20Clock/MemoryGameViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "21"
-                  endingLineNumber = "21"
-                  offsetFromSymbolStart = "382">
-               </Location>
-               <Location
-                  uuid = "89DB2F00-6C3F-43EC-8112-F791851F25DF - d34c6d3339d31727"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Alarm_Clock.MemoryGameViewModel.revealCorrectTilesTemporarily() -&gt; ()"
-                  moduleName = "Alarm Clock"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/conor/Documents/Alarm%20Clock/Alarm%20Clock/MemoryGameViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "40"
-                  endingLineNumber = "40"
-                  offsetFromSymbolStart = "349">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "05158D05-1E86-4F84-B07E-6F20AA665B46"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -62,10 +14,10 @@
             filePath = "Alarm Clock/MemoryGameViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
-            landmarkName = "setupGame()"
-            landmarkType = "7">
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "MemoryGameViewModel"
+            landmarkType = "3">
             <Locations>
                <Location
                   uuid = "05158D05-1E86-4F84-B07E-6F20AA665B46 - 863089ef213e9555"

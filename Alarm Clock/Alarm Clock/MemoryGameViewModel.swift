@@ -112,40 +112,51 @@ class MemoryGameViewModel: ObservableObject {
     }
 
     func revealCorrectTilesTemporarilyWithAnimation() {
-        // Reveal correct tiles with an animation
-        for index in tiles.indices where tiles[index].isCorrect {
-            withAnimation(Animation.linear(duration: 0.5).delay(0.5)) {
+        // Start revealing tiles with an animation
+        withAnimation(Animation.linear(duration: 0.5).delay(0.5)) {
+            for index in tiles.indices where tiles[index].isCorrect {
                 tiles[index].isRevealed = true
             }
         }
         
-        // Hide the tiles after a delay
+        // Hide the tiles after a delay, allowing users to memorize their positions
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            for index in self.tiles.indices where self.tiles[index].isCorrect {
-                withAnimation(Animation.linear(duration: 0.5).delay(0.5)) {
+            withAnimation(Animation.linear(duration: 0.5)) {
+                for index in self.tiles.indices where self.tiles[index].isCorrect {
                     self.tiles[index].isRevealed = false
                 }
             }
         }
     }
-    
-    func revealCorrectTilesTemporarily() {
-        isRevealingTiles = true  // Start revealing tiles
-        
-        for index in tiles.indices where tiles[index].isCorrect {
-            tiles[index].isRevealed = true
-        }
-        self.tiles = self.tiles.map { $0 }  // Ensure UI updates
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-            guard let self = self else { return }
 
-            for index in self.tiles.indices where self.tiles[index].isCorrect {
-                self.tiles[index].isRevealed = false
+    func revealCorrectTilesTemporarily() {
+        // Mark the start of revealing tiles
+        isRevealingTiles = true
+
+        // First, reveal correct tiles with animation
+        for index in tiles.indices where tiles[index].isCorrect {
+            withAnimation(Animation.easeInOut(duration: 0.5).delay(0.5)) {
+                tiles[index].isRevealed = true
             }
-            self.tiles = self.tiles.map { $0 }  // Ensure UI updates again
-            
-            self.isRevealingTiles = false  // Done revealing tiles
+        }
+        
+        // Ensure UI updates to reflect this
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.tiles = self.tiles.map { $0 }
+        }
+
+        // After a short delay, conceal the tiles again
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            for index in self.tiles.indices where self.tiles[index].isCorrect {
+                withAnimation(Animation.easeInOut(duration: 0.5)) {
+                    self.tiles[index].isRevealed = false
+                }
+            }
+            // Update the UI after concealing the tiles
+            DispatchQueue.main.async {
+                self.tiles = self.tiles.map { $0 }
+                self.isRevealingTiles = false  // End revealing tiles
+            }
         }
     }
     

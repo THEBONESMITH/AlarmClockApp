@@ -80,19 +80,17 @@ struct TileView: View {
     var body: some View {
         Group {
             if let tile = tile {
-                ZStack {
-                    // Decide the face of the tile based on its isRevealed state
-                    Rectangle()
-                        .fill(tile.isRevealed ? (tile.isCorrect ? viewModel.currentRoundColor : Color.red) : Color(red: 0.4, green: 0.4, blue: 0.4)) // Darker grey
-                        .frame(width: 60, height: 60)
-                        .onTapGesture {
-                            withAnimation(Animation.easeInOut(duration: 0.5)) {
-                                viewModel.toggleTile(tileId)
-                            }
+                Rectangle()
+                    .fill(tile.isRevealed ? (tile.isCorrect ? viewModel.currentRoundColor : Color.red) : Color(red: 0.4, green: 0.4, blue: 0.4))
+                    .frame(width: 60, height: 60)
+                    // Apply a more subtle flip effect
+                    .rotation3DEffect(.degrees(tile.isRevealed ? 180 : 0), axis: (x: 0, y: 1, z: 0), perspective: 0.5)
+                    .onTapGesture {
+                        withAnimation(Animation.easeInOut(duration: 0.5)) {
+                            viewModel.toggleTile(tileId)
                         }
-                }
+                    }
             } else {
-                // Fallback view in case tile isn't found, adjust as needed
                 Rectangle()
                     .fill(Color.clear)
                     .frame(width: 60, height: 60)
