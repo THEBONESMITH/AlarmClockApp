@@ -1,32 +1,32 @@
 # Alarm Clock App for macOS
 
-The Alarm Clock app is a cutting-edge macOS application developed with SwiftUI, designed not only to wake you up on time but to ensure you're truly awake through an interactive and challenging memory game. It combines utility with an engaging user experience to transform waking up into an enjoyable activity.
+The Alarm Clock app, crafted with SwiftUI for macOS, is more than just an alarm. It incorporates a memory game to ensure that you're fully awake before you can turn off the alarm. This approach adds a layer of engagement to your morning routine, aiming to make waking up a bit more interesting.
 
 ## Key Features
 
-- **Customizable Alarm Time:** Set your alarm quickly using a straightforward interface.
-- **Interactive Memory Game:** A stimulating memory game that needs to be solved to turn off the alarm, ensuring you're fully awake.
-- **Persistent Application State:** The app prevents itself from being closed or quit until the alarm is dismissed by completing the memory game, making sure you're up and moving.
-- **Forced Volume Control:** If attempts are made to lower the volume or mute it, the app overrides these changes by forcibly raising the system volume, guaranteeing the alarm is heard.
-- **Gradual Volume Increase:** The alarm volume starts low and gradually increases, ensuring a gentle yet effective wake-up.
-- **Snooze Option:** Provides a snooze feature for mornings when you need a bit more sleep.
+- **Customizable Alarm Time:** Set your alarm effortlessly with a user-friendly interface.
+- **Interactive Memory Game:** To turn off the alarm, solve a memory game that guarantees you're alert.
+- **Persistent Application State:** The app requires the memory game to be completed before it can be closed or quit, ensuring you're ready to start your day.
+- **Forced Volume Control:** If the volume is lowered or muted, the app intervenes by raising the system volume to ensure the alarm is heard.
+- **Gradual Volume Increase:** Begins with a softer volume that gently rises, designed to wake you up without a start.
+- **Snooze Option:** A snooze feature for those mornings when you need just a bit more sleep.
 
-## Enhanced Memory Game Details
+## Memory Game Details
 
-The core feature of this app is its memory game, designed not only to silence the alarm but to ensure cognitive engagement right after waking up. The game presents a grid of tiles where the user must remember and match tile locations to win. This interaction ensures that you're not just awake but also mentally stimulated.
+At the heart of this app is its memory game, crafted to make sure you're not just awake but mentally engaged. The game presents a challenge that must be completed to silence the alarm, adding a fun twist to your morning routine.
 
 ### Memory Game Features:
 
-- **Dynamic Difficulty:** The difficulty level adjusts based on your waking state, requiring more cognitive effort to shut off the alarm on days you’re groggier.
-- **Forced Engagement:** The app cannot be quit or closed without solving the puzzle, ensuring that you're fully awake and engaged before you start your day.
-- **Volume Control Prevention:** To ensure the memory game is played, the app will automatically increase the system volume if you try to mute or lower it, ensuring the alarm remains audible until you're ready to engage with the game.
+- **Engagement Required:** The app remains active until the puzzle is solved, promoting mental alertness from the moment you wake up.
+- **Volume Control Prevention:** The app counters any attempt to mute or lower its volume, ensuring the alarm continues until you're ready to tackle the day.
+- **Interactive Puzzle:** Completing the memory game puzzle is necessary to turn off the alarm, making sure you’re fully awake.
 
 ## Usage
 
-1. **Set Alarm:** Select your wake-up time with ease.
-2. **Alarm Activation:** At the set time, the app plays an alarm sound that gradually increases in volume.
-3. **Engage in Memory Game:** Dismiss the alarm by successfully completing the memory game, ensuring you're awake.
-4. **Snooze or Disable:** Opt to snooze if you need more rest, or turn off the alarm upon completing the memory game.
+1. **Set Alarm:** Choose your wake-up time easily.
+2. **Alarm Activation:** At the set time, the app plays an alarm sound that increases in volume gradually.
+3. **Memory Game Engagement:** Solve the memory game to prove you're awake and turn off the alarm.
+4. **Snooze or Disable:** You can snooze for more sleep or disable the alarm after completing the game.
 
 ## System Requirements
 
@@ -35,13 +35,12 @@ The core feature of this app is its memory game, designed not only to silence th
 
 ## Installation
 
-To install, clone the repository and open the project in Xcode. Compile the project and run it on your macOS device.
+Clone the repository and open the project in Xcode to install. Build and run it on your macOS device.
 
 ## Support and Contributions
 
-For support or to contribute, please create an issue or pull request on GitHub. Your contributions to improving the alarm clock experience are appreciated.
+For support or contributions, feel free to open an issue or pull request on GitHub. Your input helps make waking up a better experience.
 
 ## License
 
-This project is freely available under the MIT License. For more details, see the LICENSE.md file.
-
+This project is available under the MIT License. See the LICENSE.md file for more details.
