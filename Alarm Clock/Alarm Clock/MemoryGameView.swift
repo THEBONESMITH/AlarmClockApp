@@ -11,32 +11,45 @@ struct MemoryGameView: View {
     @ObservedObject var viewModel: MemoryGameViewModel
     @State private var showStartScreen = true
     
-    // Columns definition for your grid layout
-    private let columns: [GridItem] = Array(repeating: .init(.fixed(60), spacing: 10), count: 5)
-
+    // Define the grid layout with fixed-size tiles
+    private let tileWidth: CGFloat = 60
+    private let tileHeight: CGFloat = 60
+    private let spacing: CGFloat = 10 // Spacing between tiles
+    // Adjust the bottom padding to be slightly less if needed
+    private let padding: CGFloat = 10 // Padding around the grid
+    private var gridHeight: CGFloat {
+        let rows = CGFloat((viewModel.tiles.count + columns.count - 1) / columns.count)
+        return rows * tileHeight + (rows - 1) * spacing + padding // padding only applied to top here
+    }
+    
+    private var columns: [GridItem] {
+        Array(repeating: .init(.fixed(tileWidth), spacing: spacing), count: 5)
+    }
+    
     var body: some View {
         ZStack {
             VStack {
                 Spacer()
                 HStack {
                     Spacer()
-                    // ScrollView adjusted to allow content to fit without being clipped
                     ScrollView(showsIndicators: false) {
-                        LazyVGrid(columns: columns, spacing: 10) {
+                        LazyVGrid(columns: columns, spacing: spacing) {
                             ForEach(viewModel.tiles, id: \.id) { tile in
                                 TileView(viewModel: viewModel, tileId: tile.id)
-                                    .frame(width: 60, height: 60)
+                                    .frame(width: tileWidth, height: tileHeight)
                             }
                         }
-                        // Adjust padding here if necessary
+                        // Apply padding to top, leading, and trailing edges only
+                        .padding([.top, .leading, .trailing], padding)
                     }
-                    // Remove the frame from the ScrollView to allow it to fit content
+                    .frame(minWidth: (tileWidth + spacing) * CGFloat(columns.count) + padding,
+                           minHeight: gridHeight)
                     Spacer()
                 }
-                Spacer()
+                // Apply a smaller padding to the bottom, if necessary, to match other sides
+                Spacer().frame(height: padding / 0.5)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(10) // Consider moving padding here, outside of the ScrollView
             
             if showStartScreen {
                 StartScreenView(onStart: {
