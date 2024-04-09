@@ -11,40 +11,50 @@ struct MemoryGameView: View {
     @ObservedObject var viewModel: MemoryGameViewModel
     @State private var showStartScreen = true
     
+    // Columns definition for your grid layout
     private let columns: [GridItem] = Array(repeating: .init(.fixed(60), spacing: 10), count: 5)
 
     var body: some View {
-            ZStack {
-                VStack {
-                    ScrollView {
+        ZStack {
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    // ScrollView adjusted to allow content to fit without being clipped
+                    ScrollView(showsIndicators: false) {
                         LazyVGrid(columns: columns, spacing: 10) {
                             ForEach(viewModel.tiles, id: \.id) { tile in
                                 TileView(viewModel: viewModel, tileId: tile.id)
                                     .frame(width: 60, height: 60)
                             }
                         }
-                        .padding(10)
+                        // Adjust padding here if necessary
                     }
+                    // Remove the frame from the ScrollView to allow it to fit content
+                    Spacer()
                 }
-                
-                if showStartScreen {
-                    // Start screen that covers the grid until the game starts
-                    StartScreenView(onStart: {
-                        withAnimation {
-                            showStartScreen = false
-                        }
-                        viewModel.setupGame() // Setup or reset the game state
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            viewModel.revealCorrectTilesTemporarily()
-                        }
-                    })
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color.black.opacity(0.5))
-                    .foregroundColor(.white)
-                }
+                Spacer()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(10) // Consider moving padding here, outside of the ScrollView
+            
+            if showStartScreen {
+                StartScreenView(onStart: {
+                    withAnimation {
+                        showStartScreen = false
+                    }
+                    viewModel.setupGame()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        viewModel.revealCorrectTilesTemporarily()
+                    }
+                })
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.black.opacity(0.5))
+                .foregroundColor(.white)
             }
         }
     }
+}
 
 struct TileView: View {
     @ObservedObject var viewModel: MemoryGameViewModel

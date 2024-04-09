@@ -13,24 +13,29 @@ struct PuzzleView: View {
     @State private var tiles: [Tile] = (0..<25).map { _ in Tile() }
 
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            LazyVGrid(columns: gridLayout, spacing: 10) {
-                ForEach(tiles) { tile in
-                    Rectangle()
-                        .foregroundColor(tile.isRevealed ? .green : Color(red: 0.5, green: 0.5, blue: 0.5))
-                        .aspectRatio(1, contentMode: .fit)
-                        .border(Color.white, width: 1)
-                        .onTapGesture {
-                            tileTapped(tile)
-                        }
+        VStack {
+            Spacer()
+            ScrollView(.vertical, showsIndicators: false) {
+                LazyVGrid(columns: gridLayout, spacing: 10) {
+                    ForEach(tiles) { tile in
+                        Rectangle()
+                            .foregroundColor(tile.isRevealed ? .green : Color(red: 0.5, green: 0.5, blue: 0.5))
+                            .aspectRatio(1, contentMode: .fit)
+                            .border(Color.white, width: 1)
+                            .onTapGesture {
+                                    tileTapped(tile)
+                            }
+                    }
                 }
+                .padding(20)
+                .background(Color.black.opacity(0.8))
+                // Applying fixed size to prevent any resizing impression
+                .fixedSize(horizontal: false, vertical: true)
             }
-            .padding(20)
-            .background(Color.black.opacity(0.8))
+            .frame(width: 500, height: 500) // Explicit fixed size for the ScrollView container
+            Spacer()
         }
-        // Set both minWidth and maxWidth to the same value to prevent resizing
-        // Same for minHeight and maxHeight
-        .frame(minWidth: 500, maxWidth: 500, minHeight: 500, maxHeight: 500)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             setupGame()
         }
