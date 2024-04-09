@@ -95,6 +95,10 @@ class MemoryGameViewModel: ObservableObject {
         let allCorrectTilesRevealed = tiles.filter { $0.isCorrect }.allSatisfy { $0.isRevealed }
         if allCorrectTilesRevealed {
             print("All correct tiles revealed. Player has won.")
+            
+            // Call snooze feature here
+            // alarmManager.snoozeAlarm()
+            
             return true
         }
         return false
@@ -104,6 +108,7 @@ class MemoryGameViewModel: ObservableObject {
         alarmManager.turnOffAlarm()
         // Any additional logic needed to reset the game state or prepare for a new game can go here
         alarmManager.stopEnsuringVolume()
+        // alarmManager.cancelSnooze()
     }
 
     func revealCorrectTilesTemporarilyWithAnimation() {
