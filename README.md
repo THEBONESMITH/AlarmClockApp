@@ -1,43 +1,47 @@
-# ChatGPT Message Counter Safari Extension
+# Alarm Clock App for macOS
 
-## Description
-
-The ChatGPT Message Counter is a sophisticated Safari Extension designed to help users monitor their messaging activity by counting the number of messages sent within a dynamic three-hour window. This tool employs smart detection mechanisms to estimate message sends, offering a unique approach to managing communication frequency.
+The Alarm Clock app is a cutting-edge macOS application developed with SwiftUI, designed not only to wake you up on time but to ensure you're truly awake through an interactive and challenging memory game. It combines utility with an engaging user experience to transform waking up into an enjoyable activity.
 
 ## Key Features
 
-- **Intelligent Message Detection**: Employs smart typing detection and send button click recognition to estimate message sends, enhancing reliability where direct send button clicks might not always be registered.
-- **Three-Hour Rolling Window**: Utilizes a rolling three-hour window for counting messages, providing continuous real-time updates without simply resetting every three hours.
-- **Persistent Memory**: Leverages persistent storage to maintain count accuracy, ensuring uninterrupted tracking of message counts even across browser restarts.
+- **Customizable Alarm Time:** Set your alarm quickly using a straightforward interface.
+- **Interactive Memory Game:** A stimulating memory game that needs to be solved to turn off the alarm, ensuring you're fully awake.
+- **Persistent Application State:** The app prevents itself from being closed or quit until the alarm is dismissed by completing the memory game, making sure you're up and moving.
+- **Forced Volume Control:** If attempts are made to lower the volume or mute it, the app overrides these changes by forcibly raising the system volume, guaranteeing the alarm is heard.
+- **Gradual Volume Increase:** The alarm volume starts low and gradually increases, ensuring a gentle yet effective wake-up.
+- **Snooze Option:** Provides a snooze feature for mornings when you need a bit more sleep.
 
-## Installation
+## Enhanced Memory Game Details
 
-1. Download the extension file from the provided repository or extension store.
-2. In Safari, go to `Safari > Preferences > Extensions`.
-3. Drag and drop the downloaded file into the Extensions panel.
-4. Enable the ChatGPT Message Counter by checking its box in the Extensions list.
+The core feature of this app is its memory game, designed not only to silence the alarm but to ensure cognitive engagement right after waking up. The game presents a grid of tiles where the user must remember and match tile locations to win. This interaction ensures that you're not just awake but also mentally stimulated.
+
+### Memory Game Features:
+
+- **Dynamic Difficulty:** The difficulty level adjusts based on your waking state, requiring more cognitive effort to shut off the alarm on days you’re groggier.
+- **Forced Engagement:** The app cannot be quit or closed without solving the puzzle, ensuring that you're fully awake and engaged before you start your day.
+- **Volume Control Prevention:** To ensure the memory game is played, the app will automatically increase the system volume if you try to mute or lower it, ensuring the alarm remains audible until you're ready to engage with the game.
 
 ## Usage
 
-After installation, the extension will automatically start tracking message activity. To view your message count:
+1. **Set Alarm:** Select your wake-up time with ease.
+2. **Alarm Activation:** At the set time, the app plays an alarm sound that gradually increases in volume.
+3. **Engage in Memory Game:** Dismiss the alarm by successfully completing the memory game, ensuring you're awake.
+4. **Snooze or Disable:** Opt to snooze if you need more rest, or turn off the alarm upon completing the memory game.
 
-1. Click on the extension icon in the Safari toolbar.
-2. A popup will display the current count of messages sent in the last three hours and the time left until the counter updates.
+## System Requirements
 
-### Detailed Logic
+- macOS 11.0 or later
+- SwiftUI
 
-- **Typing vs. Pasting**: The extension differentiates between typing and pasting actions. While each pasting action counts as a single character, at least two characters need to be typed to qualify as a potential message send.
-- **Dynamic Three-Hour Tracking**: Instead of resetting every three hours, the counter updates based on a rolling window, ensuring that only messages sent within the last three hours are counted.
-- **Persistent Tracking Across Sessions**: The use of Chrome's local storage ensures that the message count remains accurate and persistent, even if the browser is restarted.
+## Installation
 
-## Support and Feedback
+To install, clone the repository and open the project in Xcode. Compile the project and run it on your macOS device.
 
-For support, questions, or feedback, please contact us at [Support Email](mailto:jumps_chip_0u@icloud.com). Your suggestions are valuable to us and help in continuously improving the extension.
+## Support and Contributions
 
-## Contributing
-
-We welcome contributions to the ChatGPT Message Counter! Feel free to fork the repository, make your changes, and submit pull requests with your enhancements.
+For support or to contribute, please create an issue or pull request on GitHub. Your contributions to improving the alarm clock experience are appreciated.
 
 ## License
 
-This extension is released under the MIT License. See the LICENSE file in the repository for more details.
+This project is freely available under the MIT License. For more details, see the LICENSE.md file.
+
