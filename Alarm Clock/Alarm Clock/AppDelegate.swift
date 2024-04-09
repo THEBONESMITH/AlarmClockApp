@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  Alarm Clock
-//
-//  Created by . . on 09/04/2024.
-//
-
 import Foundation
 import Cocoa
 import SwiftUI
@@ -14,13 +7,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     let alarmManager = AlarmManager()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // Remove the .resizable flag from the window style
+        // Add the .resizable flag to the window style
         window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 800, height: 600),
-            styleMask: [.titled, .closable, .miniaturizable, .fullSizeContentView],
+            styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView], // Notice the addition of .resizable here
             backing: .buffered, defer: false)
         window.center()
         window.setFrameAutosaveName("Main Window")
+        window.delegate = self // Make sure to set the delegate if you want to use delegate methods
         window.makeKeyAndOrderFront(nil)
 
         let contentView = ContentView(alarmManager: self.alarmManager)

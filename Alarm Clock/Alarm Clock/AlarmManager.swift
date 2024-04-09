@@ -18,6 +18,8 @@ class AlarmManager: ObservableObject {
     // New Timer properties to manage sound playback durations
     var wristwatchTimer: Timer?
     var bellTimer: Timer?
+    var volumeAdjustTimer: Timer?
+    var initialVolume: Float = 0.0 // Holds the initial volume
 
     init() {
         setupAudioPlayers()
@@ -29,6 +31,37 @@ class AlarmManager: ObservableObject {
         bellTimer?.invalidate()
     }
     
+    func graduallyIncreaseSystemVolume(to targetVolume: Int = 100, over duration: TimeInterval = 10) {
+        // Calculate the volume increment
+        let increments = 10 // Adjust the number of increments as needed
+        let incrementVolume = targetVolume / increments
+        let timeInterval = duration / Double(increments)
+        
+        for step in 1...increments {
+            DispatchQueue.global().asyncAfter(deadline: .now() + timeInterval * Double(step)) {
+                let volume = incrementVolume * step
+                let script = """
+                    osascript -e "set volume output volume \(volume)"
+                """
+                // Execute the AppleScript command
+                self.executeCommand(script)
+            }
+        }
+    }
+
+    func executeCommand(_ command: String) {
+        let process = Process()
+        let pipe = Pipe()
+        
+        process.standardOutput = pipe
+        process.standardError = pipe
+        process.arguments = ["-c", command]
+        process.launchPath = "/bin/zsh"
+        process.launch()
+        
+        process.waitUntilExit() // You might want to handle this asynchronously depending on your app's needs
+    }
+
     func turnOffAlarm() {
         print("Turning off alarm...")
         
@@ -77,10 +110,21 @@ class AlarmManager: ObservableObject {
 
     func triggerAlarm() {
         DispatchQueue.main.async {
-            print("Triggering alarm and showing memory game.")
-            self.playSound()
-            self.shouldShowMemoryGame = true
+            // Step 1: Indicate the alarm is active and the memory game should be shown
             self.isAlarmActive = true
+            self.shouldShowMemoryGame = true
+            
+            // Step 2: Start playing the alarm sound
+            self.playSound()
+            
+            // Gradually increase system volume starting shortly after the sound begins
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.graduallyIncreaseSystemVolume(to: 100, over: 10)
+            }
+            
+            // The Memory Game's presentation is tied to the `shouldShowMemoryGame` property.
+            // Assuming your SwiftUI views observe this property, changing its value to `true`
+            // should automatically update the UI to present the game.
         }
     }
 
