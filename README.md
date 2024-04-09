@@ -1,6 +1,6 @@
-# Alarm Clock App for macOS
+# Puzzle Alarm App for macOS
 
-The Alarm Clock app, crafted with SwiftUI for macOS, is more than just an alarm. It incorporates a memory game to ensure that you're fully awake before you can turn off the alarm. This approach adds a layer of engagement to your morning routine, aiming to make waking up a bit more interesting.
+The Puzzle Alarm app, crafted with SwiftUI for macOS, is more than just an alarm. It incorporates a memory game to ensure that you're fully awake before you can turn off the alarm. This approach adds a layer of engagement to your morning routine, aiming to make waking up a bit more interesting.
 
 ## Key Features
 
