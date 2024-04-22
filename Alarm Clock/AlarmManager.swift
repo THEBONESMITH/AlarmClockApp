@@ -40,7 +40,7 @@ class AlarmManager: ObservableObject {
     }
     
     func stopEnsuringVolume() {
-        // Invalidate the timer when the alarm is turned off or game ends
+        // Invalidate the timer when githe alarm is turned off or game ends
         volumeCheckTimer?.invalidate()
     }
     

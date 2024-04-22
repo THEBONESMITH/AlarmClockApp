@@ -34,7 +34,20 @@ struct ContentView: View {
                 }
                 .fixedSize()
 
-                Stepper(value: $selectedMinute, in: 0...59) {
+                // Custom Stepper for Minutes with a Wraparound Effect
+                Stepper(onIncrement: {
+                    selectedMinute += 1
+                    if selectedMinute >= 60 {
+                        selectedMinute = 0
+                        selectedHour = (selectedHour + 1) % 24
+                    }
+                }, onDecrement: {
+                    selectedMinute -= 1
+                    if selectedMinute < 0 {
+                        selectedMinute = 59
+                        selectedHour = (selectedHour + 23) % 24
+                    }
+                }) {
                     Text(String(format: "%02d", selectedMinute)) // Format for two digits
                         .font(.title)
                         .frame(width: 50, alignment: .center)
