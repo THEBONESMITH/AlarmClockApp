@@ -137,25 +137,30 @@ class AlarmManager: ObservableObject {
     func setAlarm(hour: Int, minute: Int) {
         let calendar = Calendar.current
         let now = Date()
-        var components = calendar.dateComponents([.year, .month, .day], from: now)
+        var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
+
+        // Set the desired alarm time
         components.hour = hour
         components.minute = minute
-        components.second = 0 // Ensure the alarm triggers at the start of the minute
-        
-        guard let alarmTime = calendar.date(from: components) else { return }
-        
-        self.alarmTime = alarmTime
-        
-        // Compare the alarmTime with the current time
+        components.second = 0
+
+        // Create the Date for the desired alarm time
+        guard var alarmTime = calendar.date(from: components) else { return }
+
+        // If the alarm time is in the past, schedule it for the next day
         if alarmTime <= now {
-            // If the alarmTime is now or in the past, trigger the alarm immediately
-            triggerAlarm()
-        } else {
-            // Schedule the alarm for a future time
-            let timeInterval = alarmTime.timeIntervalSinceNow
-            Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: false) { [weak self] _ in
-                self?.triggerAlarm()
+            if let nextDay = calendar.date(byAdding: .day, value: 1, to: alarmTime) {
+                alarmTime = nextDay
             }
+        }
+
+        // Store the alarm time
+        self.alarmTime = alarmTime
+
+        // Schedule the alarm
+        let timeInterval = alarmTime.timeIntervalSince(now)
+        Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: false) { [weak self] _ in
+            self?.triggerAlarm()
         }
     }
 
