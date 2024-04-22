@@ -22,8 +22,8 @@ class AlarmManager: ObservableObject {
     var initialVolume: Float = 0.0 // Holds the initial volume
     var volumeCheckTimer: Timer?
     let targetVolume: Int = 100 // Target volume level
-        let duration: TimeInterval = 10 // Duration over which to increase volume initially
-        let checkInterval: TimeInterval = 2 // Interval to check and adjust volume if needed
+    let duration: TimeInterval = 10 // Duration over which to increase volume initially
+    let checkInterval: TimeInterval = 2 // Interval to check and adjust volume if needed
 
     init() {
         setupAudioPlayers()

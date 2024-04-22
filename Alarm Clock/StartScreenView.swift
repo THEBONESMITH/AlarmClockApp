@@ -12,8 +12,7 @@ struct StartScreenView: View {
     var onStart: () -> Void
     
     var body: some View {
-        VStack {
-            
+        VStack {    
             Button(action: onStart) {
                 Text("Start")
                     .font(.title)  // Increase font size for the button text
