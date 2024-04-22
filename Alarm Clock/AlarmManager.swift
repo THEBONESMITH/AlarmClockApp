@@ -137,24 +137,36 @@ class AlarmManager: ObservableObject {
     func setAlarm(hour: Int, minute: Int) {
         let calendar = Calendar.current
         let now = Date()
-        var components = calendar.dateComponents([.year, .month, .day], from: now)
+
+        var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
         components.hour = hour
         components.minute = minute
-        components.second = 0 // Ensure the alarm triggers at the start of the minute
-        
+        components.second = 0  // Set seconds to zero for precise comparison
+
+        // Create the Date for the desired alarm time
         guard let alarmTime = calendar.date(from: components) else { return }
-        
+
         self.alarmTime = alarmTime
-        
-        // Compare the alarmTime with the current time
-        if alarmTime <= now {
-            // If the alarmTime is now or in the past, trigger the alarm immediately
+
+        // If the alarm time matches the current time (within the same minute), trigger immediately
+        if calendar.isDate(alarmTime, equalTo: now, toGranularity: .minute) {
             triggerAlarm()
         } else {
-            // Schedule the alarm for a future time
-            let timeInterval = alarmTime.timeIntervalSinceNow
-            Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: false) { [weak self] _ in
-                self?.triggerAlarm()
+            // If the alarm time is in the past but still on the same day, schedule it for the next day
+            if alarmTime < now && calendar.isDate(alarmTime, inSameDayAs: now) {
+                let nextDay = calendar.date(byAdding: .day, value: 1, to: alarmTime) ?? alarmTime
+                let timeInterval = nextDay.timeIntervalSince(now)
+
+                Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: false) { [weak self] _ in
+                    self?.triggerAlarm()
+                }
+            } else {
+                // If the alarm time is in the future, schedule it normally
+                let timeInterval = alarmTime.timeIntervalSince(now)
+
+                Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: false) { [weak self] _ in
+                    self?.triggerAlarm()
+                }
             }
         }
     }
