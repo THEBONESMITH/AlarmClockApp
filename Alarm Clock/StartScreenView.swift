@@ -13,16 +13,13 @@ struct StartScreenView: View {
     
     var body: some View {
         VStack {
-            Text("Ready to Play?")
-                .font(.largeTitle)
-            
             Button(action: onStart) {
                 Text("Start")
-                    .font(.title)  // Increase font size for the button text
+                    .font(.largeTitle)  // Increase font size for the button text
                     .padding()     // Add padding for a larger clickable area
             }
             .buttonStyle(.borderedProminent)
-            .padding(20)  // Additional padding around the button
+            .padding(15)  // Additional padding around the button
             .frame(maxWidth: 200, maxHeight: 50)  // Set fixed width and height
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
